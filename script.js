@@ -142,3 +142,6 @@ function restartGame() {
 
     document.getElementById("event").innerHTML = "";
 }
+
+updateStatus();
+
