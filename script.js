@@ -4,14 +4,12 @@ let health = 100;
 let currentEvent = null;
 let isAlive = true;
 
-// Atualiza números na tela
 function updateStatus() {
     document.getElementById("age").textContent = age;
     document.getElementById("happiness").textContent = happiness;
     document.getElementById("health").textContent = health;
 }
 
-// Botão Envelhecer
 function ageUp() {
 
     if (!isAlive) return;
@@ -22,7 +20,6 @@ function ageUp() {
     generateEvent();
 }
 
-// Eventos com escolhas
 function generateEvent() {
 
     const events = [
@@ -85,12 +82,11 @@ function generateEvent() {
 
     document.getElementById("event").innerHTML = `
         <p>${currentEvent.text}</p>
-        <button onclick="chooseOption(1)"> ${currentEvent.option1.text} </button>
-        <button onclick="chooseOption(2)"> ${currentEvent.option2.text} </button>
+        <button onclick="chooseOption(1)">${currentEvent.option1.text}</button>
+        <button onclick="chooseOption(2)">${currentEvent.option2.text}</button>
     `;
 }
 
-// Quando escolhe uma opção
 function chooseOption(option) {
 
     if (!isAlive) return;
@@ -101,7 +97,6 @@ function chooseOption(option) {
         currentEvent.option2.effect();
     }
 
-    // Limitar valores
     happiness = Math.max(0, Math.min(100, happiness));
     health = Math.max(0, Math.min(100, health));
 
@@ -112,22 +107,16 @@ function chooseOption(option) {
     checkDeath();
 }
 
-// Verifica morte
 function checkDeath() {
-
     if (health <= 0) {
         isAlive = false;
         gameOver();
     }
 }
 
-// Tela de fim de jogo
 function gameOver() {
 
-    const ageButton = document.querySelector("button[onclick='ageUp()']");
-    if (ageButton) {
-        ageButton.disabled = true;
-    }
+    document.getElementById("ageButton").disabled = true;
 
     document.getElementById("event").innerHTML = `
         <h2>💀 Você morreu aos ${age} anos!</h2>
@@ -136,7 +125,6 @@ function gameOver() {
     `;
 }
 
-// Reiniciar jogo
 function restartGame() {
 
     age = 0;
@@ -146,10 +134,7 @@ function restartGame() {
 
     updateStatus();
 
-    const ageButton = document.querySelector("button[onclick='ageUp()']");
-    if (ageButton) {
-        ageButton.disabled = false;
-    }
+    document.getElementById("ageButton").disabled = false;
 
     document.getElementById("event").innerHTML = "";
 }
