@@ -1,9 +1,9 @@
-let age = 0;
-let happiness = 100;
-let health = 100;
-let currentEvent = null;
-
 function ageUp() {
+
+    if (health <= 0) {
+        return;
+    }
+
     age++;
 
     document.getElementById("age").textContent = age;
@@ -11,9 +11,10 @@ function ageUp() {
     generateEvent();
 
     if (health <= 0) {
-        document.getElementById("event").innerHTML = "💀 Você morreu!";
+        gameOver();
     }
 }
+
 
 function generateEvent() {
 
@@ -98,6 +99,31 @@ function chooseOption(option) {
 
     document.getElementById("happiness").textContent = happiness;
     document.getElementById("health").textContent = health;
+
+    document.getElementById("event").innerHTML = "";
+}
+function gameOver() {
+
+    document.querySelector("button").disabled = true;
+
+    document.getElementById("event").innerHTML = `
+        <h2>💀 Você morreu aos ${age} anos!</h2>
+        <p>Felicidade final: ${happiness}</p>
+        <p>Saúde final: ${health}</p>
+        <button onclick="restartGame()">Recomeçar</button>
+    `;
+}
+
+function restartGame() {
+    age = 0;
+    happiness = 100;
+    health = 100;
+
+    document.getElementById("age").textContent = age;
+    document.getElementById("happiness").textContent = happiness;
+    document.getElementById("health").textContent = health;
+
+    document.querySelector("button").disabled = false;
 
     document.getElementById("event").innerHTML = "";
 }
