@@ -12,8 +12,20 @@
 
         <div class="character">
             <p>Idade: <span id="age">0</span></p>
-            <p>Felicidade: <span id="happiness">100</span></p>
-            <p>Saúde: <span id="health">100</span></p>
+            <div class="status">
+    <p>Felicidade: <span id="happiness">100</span></p>
+    <div class="bar">
+        <div id="happinessBar" class="fill happiness"></div>
+    </div>
+</div>
+
+<div class="status">
+    <p>Saúde: <span id="health">100</span></p>
+    <div class="bar">
+        <div id="healthBar" class="fill health"></div>
+    </div>
+</div>
+
         </div>
 
         <button id="ageButton" onclick="ageUp()">Envelhecer</button>
