@@ -5,40 +5,46 @@
     <title>LifeKm</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <div class="container">
+
         <h1>LifeKm</h1>
 
-<h2>👶 Seu Nascimento</h2>
-<p id="birthInfo"></p>
-<hr>
+        <h2>👶 Seu Nascimento</h2>
+        <p id="birthInfo"></p>
+        <hr>
 
         <div class="character">
+
             <p>Idade: <span id="age">0</span></p>
 
             <div class="status">
-    <p>Felicidade: <span id="happiness">100</span></p>
-    <div class="bar">
-        <div id="happinessBar" class="fill happiness"></div>
+                <p>Felicidade: <span id="happiness">100</span></p>
+                <div class="bar">
+                    <div id="happinessBar" class="fill happiness"></div>
+                </div>
+            </div>
+
+            <div class="status">
+                <p>Saúde: <span id="health">100</span></p>
+                <div class="bar">
+                    <div id="healthBar" class="fill health"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <p id="event"></p>
+
+        <button onclick="ageUp()">Envelhecer</button>
+
     </div>
-</div>
 
-<div class="status">
-    <p>Saúde: <span id="health">100</span></p>
-    <div class="bar">
-        <div id="healthBar" class="fill health"></div>
-    </div>
-</div>
+    <!-- MUITO IMPORTANTE: script no final -->
+    <script src="script.js"></script>
 
-       </div>
-
-        <button id="ageButton" onclick="ageUp()">Envelhecer</button>
-
-
-        <div id="event"></div>
-    </div>
-
-<script src="script.js"></script>
 </body>
 </html>
+
