@@ -1,0 +1,39 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #bde0fe 50%, #ffc8dd 50%);
+    text-align: center;
+}
+
+.container {
+    margin-top: 100px;
+}
+
+h1 {
+    font-size: 40px;
+}
+
+.character {
+    margin: 20px 0;
+    font-size: 20px;
+}
+
+button {
+    padding: 12px 25px;
+    font-size: 18px;
+    background-color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #eeeeee;
+}
+
+#event {
+    margin-top: 20px;
+    font-size: 18px;
+}
