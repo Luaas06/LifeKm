@@ -8,7 +8,11 @@ function updateStatus() {
     document.getElementById("age").textContent = age;
     document.getElementById("happiness").textContent = happiness;
     document.getElementById("health").textContent = health;
+
+    document.getElementById("happinessBar").style.width = happiness + "%";
+    document.getElementById("healthBar").style.width = health + "%";
 }
+
 
 function ageUp() {
 
