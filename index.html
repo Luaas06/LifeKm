@@ -39,6 +39,27 @@
         <p id="event"></p>
 
         <button onclick="ageUp()">Envelhecer</button>
+        <button onclick="openRelationships()">Relacionamentos</button>
+
+        <div id="relationshipsScreen" style="display: none; margin-top: 20px;">
+    <h2>👨‍👩‍👧 Família</h2>
+
+    <p>Mãe</p>
+    <div class="bar">
+        <div id="motherBar" class="fill"></div>
+    </div>
+
+    <div id="fatherSection">
+        <p>Pai</p>
+        <div class="bar">
+            <div id="fatherBar" class="fill"></div>
+        </div>
+    </div>
+
+    <br>
+    <button onclick="closeRelationships()">Fechar</button>
+</div>
+
 
     </div>
 
