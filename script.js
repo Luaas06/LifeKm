@@ -165,6 +165,22 @@ function ageUp() {
     updateRelationshipBars();
 
 }
+function openRelationships() {
+    document.getElementById("relationshipsScreen").style.display = "block";
+
+    document.getElementById("motherBar").style.width = motherRelationship + "%";
+
+    if (hasTwoParents) {
+        document.getElementById("fatherSection").style.display = "block";
+        document.getElementById("fatherBar").style.width = fatherRelationship + "%";
+    } else {
+        document.getElementById("fatherSection").style.display = "none";
+    }
+}
+
+function closeRelationships() {
+    document.getElementById("relationshipsScreen").style.display = "none";
+}
 
 // ===============================
 // INICIAR JOGO
