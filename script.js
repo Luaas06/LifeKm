@@ -6,6 +6,7 @@ let age = 0;
 let happiness = 100;
 let health = 100;
 let isAlive = true;
+let lastEvent = "";
 
 // ===============================
 // GERAR NASCIMENTO
@@ -63,9 +64,7 @@ function updateBars() {
 // GERAR EVENTOS
 // ===============================
 
-let lastEvent = "";
-
-function generateEvent(age) {
+function generateEvent() {
 
     let events = [];
 
@@ -113,16 +112,14 @@ function generateEvent(age) {
     happiness += event.happiness;
     health += event.health;
 
+    // Limites
     if (happiness > 100) happiness = 100;
     if (health > 100) health = 100;
     if (happiness < 0) happiness = 0;
     if (health < 0) health = 0;
 
     document.getElementById("event").innerText = event.text;
-
 }
-
-
 
 // ===============================
 // ENVELHECER
@@ -134,12 +131,11 @@ function ageUp() {
 
     age++;
 
-    generateEvent(age);
+    generateEvent();
 
     if (health <= 0) {
         isAlive = false;
-      document.getElementById("event").innerHTML = "💀 Você morreu!";
-
+        document.getElementById("event").innerHTML = "💀 Você morreu!";
     }
 
     document.getElementById("age").textContent = age;
@@ -149,7 +145,6 @@ function ageUp() {
     updateBars();
 }
 
-
 // ===============================
 // INICIAR JOGO
 // ===============================
@@ -158,4 +153,5 @@ window.onload = function () {
     generateBirth();
     updateBars();
 };
+
 
