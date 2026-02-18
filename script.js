@@ -1,178 +1,99 @@
-// ======================================
-// VARIÁVEIS DO PERSONAGEM
-// ======================================
-
 let age = 0;
 let happiness = 100;
 let health = 100;
-let isAlive = true;
-let lastEvent = "";
+
 let motherName = "";
 let fatherName = "";
 let birthType = "";
-
 let zodiacSign = "";
 
-// ======================================
-// SISTEMA DE PAIS
-// ======================================
+let motherRelation = 80;
+let fatherRelation = 80;
 
-let parent1Name = "";
-let parent2Name = "";
-let parent1Relationship = 100;
-let parent2Relationship = 100;
+startGame();
 
-// ======================================
-// GERAR NASCIMENTO
-// ======================================
-
-function generateBirth() {
-
-    age = 0;
-    happiness = 100;
-    health = 100;
-    isAlive = true;
-
-    
-    lastEvent = "Você nasceu!";
-
+function startGame() {
     generateParents();
     generateZodiac();
-
-    
-    // MOSTRAR TEXTO DE NASCIMENTO
-   document.getElementById("birthInfo").innerText =
-        "Você nasceu em uma família comum.";
-
-    // Informações separadas (PROFISSIONAL)
-    document.getElementById("birthType").innerText = birthType;
-    document.getElementById("motherName").innerText = motherName;
-    document.getElementById("fatherName").innerText = fatherName;
-    document.getElementById("zodiac").innerText = zodiacSign;
-
+    updateBirthInfo();
     updateUI();
-    updateRelationshipBars();
 }
 
-// ======================================
-// GERAR PAIS
-// ======================================
 function generateParents() {
-
-    const maleNames = ["Carlos", "João", "Pedro", "Lucas", "Rafael", "Otavio", "Antonio", "Liam", "Leon", "Bruno", "Tito","Joel", "James"];
-    const femaleNames = ["Ana", "Maria", "Julia", "Fernanda", "Beatriz", "Luna", "Alice", "Alissa", "Luana", "Bianca", "Luiza", "Kaylane"];
+    const maleNames = ["Carlos", "João", "Pedro", "Lucas", "Rafael"];
+    const femaleNames = ["Ana", "Maria", "Julia", "Fernanda", "Beatriz"];
 
     fatherName = maleNames[Math.floor(Math.random() * maleNames.length)];
     motherName = femaleNames[Math.floor(Math.random() * femaleNames.length)];
 
-    birthType = ["Parto normal", "Cesárea", "Prematuro", "Parto Natural Domiciliar" "Parto Natural"]
-        [Math.floor(Math.random() * 3)];
+    const types = ["Parto normal", "Cesárea", "Prematuro"];
+    birthType = types[Math.floor(Math.random() * types.length)];
 }
 
-
-
-
-// ======================================
-// GERAR SIGNO
-// ======================================
-
 function generateZodiac() {
-
     const signs = [
         "Áries","Touro","Gêmeos","Câncer","Leão","Virgem",
         "Libra","Escorpião","Sagitário","Capricórnio","Aquário","Peixes"
     ];
-
     zodiacSign = signs[Math.floor(Math.random() * signs.length)];
 }
 
+function updateBirthInfo() {
+    document.getElementById("birthText").innerText =
+        "Você nasceu em uma família comum.";
 
-// ======================================
-// ENVELHECER
-// ======================================
-
-function ageUp() {
-
-    if (!isAlive) return;
-
-    age++;
-
-    happiness -= Math.floor(Math.random() * 6);
-    health -= Math.floor(Math.random() * 5);
-
-    // Limites
-    if (happiness < 0) happiness = 0;
-    if (health < 0) health = 0;
-
-    // Relação com pais diminui levemente com o tempo
-    parent1Relationship -= Math.floor(Math.random() * 3);
-    parent2Relationship -= Math.floor(Math.random() * 3);
-
-    if (parent1Relationship < 0) parent1Relationship = 0;
-    if (parent2Relationship < 0) parent2Relationship = 0;
-
-    // Morte
-    if (health <= 0 || age >= 120) {
-        isAlive = false;
-        lastEvent = "Você morreu aos " + age + " anos.";
-    } else {
-        lastEvent = "Você envelheceu para " + age + " anos.";
-    }
-
-    updateUI();
-    updateRelationshipBars();
+    document.getElementById("birthType").innerText = birthType;
+    document.getElementById("motherName").innerText = motherName;
+    document.getElementById("fatherName").innerText = fatherName;
+    document.getElementById("zodiac").innerText = zodiacSign;
 }
 
-// ======================================
-// ATUALIZAR TELA PRINCIPAL
-// ======================================
-
 function updateUI() {
-
     document.getElementById("age").innerText = age;
     document.getElementById("happiness").innerText = happiness;
     document.getElementById("health").innerText = health;
-    document.getElementById("eventText").innerText = lastEvent;
-    document.getElementById("zodiac").innerText = zodiacSign;
 
-    // Atualizar barras visuais
     document.getElementById("happinessBar").style.width = happiness + "%";
     document.getElementById("healthBar").style.width = health + "%";
+
+    document.getElementById("motherRelationText").innerText = motherRelation;
+    document.getElementById("fatherRelationText").innerText = fatherRelation;
+
+    document.getElementById("motherBar").style.width = motherRelation + "%";
+    document.getElementById("fatherBar").style.width = fatherRelation + "%";
 }
 
-// ======================================
-// ATUALIZAR RELACIONAMENTOS
-// ======================================
+function ageUp() {
+    age++;
 
-function updateRelationshipBars() {
+    happiness -= Math.floor(Math.random() * 5);
+    health -= Math.floor(Math.random() * 3);
 
-    document.getElementById("parent1Label").innerText =
-        "Mãe: " + parent1Name;
+    if (age === 5) motherRelation += 5;
+    if (age === 13) fatherRelation -= 10;
+    if (age === 18) {
+        motherRelation -= 5;
+        fatherRelation -= 5;
+    }
 
-    document.getElementById("parent2Label").innerText =
-        "Pai: " + parent2Name;
-
-    document.getElementById("parent1Bar").style.width =
-        parent1Relationship + "%";
-
-    document.getElementById("parent2Bar").style.width =
-        parent2Relationship + "%";
+    limitStats();
+    updateUI();
 }
 
-// ======================================
-// TELA DE RELACIONAMENTOS
-// ======================================
-
-function openRelationships() {
-    document.getElementById("relationshipsScreen").style.display = "block";
+function limitStats() {
+    happiness = Math.max(0, Math.min(100, happiness));
+    health = Math.max(0, Math.min(100, health));
+    motherRelation = Math.max(0, Math.min(100, motherRelation));
+    fatherRelation = Math.max(0, Math.min(100, fatherRelation));
 }
 
-function closeRelationships() {
-    document.getElementById("relationshipsScreen").style.display = "none";
+function toggleFamily() {
+    const panel = document.getElementById("familyPanel");
+
+    if (panel.style.display === "none" || panel.style.display === "") {
+        panel.style.display = "block";
+    } else {
+        panel.style.display = "none";
+    }
 }
 
-// ======================================
-// INICIAR JOGO
-// ======================================
-
-generateBirth();
