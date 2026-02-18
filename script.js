@@ -29,10 +29,17 @@ function generateBirth() {
     happiness = 100;
     health = 100;
     isAlive = true;
+
+    
     lastEvent = "Você nasceu!";
 
     generateParents();
     generateZodiac();
+
+    
+    // MOSTRAR TEXTO DE NASCIMENTO
+    document.getElementById("birthInfo").innerText =
+        "Você nasceu em uma família comum.";
 
     updateUI();
     updateRelationshipBars();
@@ -47,7 +54,7 @@ function generateParents() {
     const names = [
         "Ana", "Carlos", "Mariana", "João",
         "Fernanda", "Lucas", "Patrícia",
-        "Rafael", "Juliana", "Bruno"
+        "Rafael", "Juliana", "Bruno" , "Lua" , "Otavio" , "Ruby" , "Arlo" , "Alice" 
     ];
 
     parent1Name = names[Math.floor(Math.random() * names.length)];
