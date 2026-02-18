@@ -13,7 +13,11 @@
         <h1>LifeKm</h1>
 
         <h2>👶 Seu Nascimento</h2>
+
+        <!-- Informação de nascimento -->
         <p id="birthInfo"></p>
+        <p>Signo: <span id="zodiac"></span></p>
+
         <hr>
 
         <div class="character">
@@ -36,37 +40,38 @@
 
         </div>
 
+        <!-- Eventos -->
         <p id="event"></p>
 
         <button onclick="ageUp()">Envelhecer</button>
         <button onclick="openRelationships()">Relacionamentos</button>
 
+        <!-- TELA DE RELACIONAMENTOS -->
         <div id="relationshipsScreen" style="display: none; margin-top: 20px;">
-    <h2>👨‍👩‍👧 Família</h2>
 
-    <p id="parent1Label">Mãe</p>
-    <div class="bar">
-        <div id="parent1Bar" class="fill"></div>
-    </div>
+            <h2>👨‍👩‍👧 Família</h2>
 
-    <div id="parent2Section">
-        <p id="parent2Label">Pai</p>
-        <div class="bar">
-            <div id="parent2Bar" class="fill"></div>
+            <p id="parent1Label"></p>
+            <div class="bar">
+                <div id="parent1Bar" class="fill"></div>
+            </div>
+
+            <div id="parent2Section">
+                <p id="parent2Label"></p>
+                <div class="bar">
+                    <div id="parent2Bar" class="fill"></div>
+                </div>
+            </div>
+
+            <br>
+            <button onclick="closeRelationships()">Fechar</button>
+
         </div>
-    </div>
-
-    <br>
-    <button onclick="closeRelationships()">Fechar</button>
-</div>
-
-
 
     </div>
 
-    <!-- MUITO IMPORTANTE: script no final -->
+    <!-- SCRIPT SEMPRE NO FINAL -->
     <script src="script.js"></script>
 
 </body>
 </html>
-
