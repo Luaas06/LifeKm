@@ -118,7 +118,8 @@ function generateEvent(age) {
     if (happiness < 0) happiness = 0;
     if (health < 0) health = 0;
 
-    document.getElementById("eventText").innerText = event.text;
+    document.getElementById("event").innerText = event.text;
+
 }
 
 
@@ -137,7 +138,8 @@ function ageUp() {
 
     if (health <= 0) {
         isAlive = false;
-        document.getElementById("event").innerHTML = "💀 Você morreu!";
+      document.getElementById("event").innerHTML = "💀 Você morreu!";
+
     }
 
     document.getElementById("age").textContent = age;
