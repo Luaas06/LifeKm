@@ -7,6 +7,9 @@ let happiness = 100;
 let health = 100;
 let isAlive = true;
 let lastEvent = "";
+let motherName = "";
+let fatherName = "";
+let birthType = "";
 
 let zodiacSign = "";
 
@@ -38,8 +41,13 @@ function generateBirth() {
 
     
     // MOSTRAR TEXTO DE NASCIMENTO
-    document.getElementById("birthInfo").innerText =
-        "Você nasceu em uma família comum.";
+    document.getElementById("birthInfo").innerHTML =
+    "Você nasceu em uma família comum.<br><br>" +
+    "🍼 Tipo de nascimento: " + birthType + "<br>" +
+    "👩 Mãe: " + motherName + "<br>" +
+    "👨 Pai: " + fatherName + "<br>" +
+    "♈ Signo: " + zodiacSign;
+
 
     updateUI();
     updateRelationshipBars();
@@ -48,21 +56,20 @@ function generateBirth() {
 // ======================================
 // GERAR PAIS
 // ======================================
-
 function generateParents() {
 
-    const names = [
-        "Ana", "Carlos", "Mariana", "João",
-        "Fernanda", "Lucas", "Patrícia",
-        "Rafael", "Juliana", "Bruno" , "Lua" , "Otavio" , "Ruby" , "Arlo" , "Alice" 
-    ];
+    const maleNames = ["Carlos", "João", "Pedro", "Lucas", "Rafael", "Otavio", "Antonio", "Liam", "Leon", "Bruno", "Tito","Joel", "James"];
+    const femaleNames = ["Ana", "Maria", "Julia", "Fernanda", "Beatriz", "Luna", "Alice", "Alissa", "Luana", "Bianca", "Luiza", "Kaylane"];
 
-    parent1Name = names[Math.floor(Math.random() * names.length)];
-    parent2Name = names[Math.floor(Math.random() * names.length)];
+    fatherName = maleNames[Math.floor(Math.random() * maleNames.length)];
+    motherName = femaleNames[Math.floor(Math.random() * femaleNames.length)];
 
-    parent1Relationship = 100;
-    parent2Relationship = 100;
+    birthType = ["Parto normal", "Cesárea", "Prematuro", "Parto Natural Domiciliar" "Parto Natural"]
+        [Math.floor(Math.random() * 3)];
 }
+
+
+
 
 // ======================================
 // GERAR SIGNO
@@ -71,14 +78,13 @@ function generateParents() {
 function generateZodiac() {
 
     const signs = [
-        "Áries", "Touro", "Gêmeos", "Câncer",
-        "Leão", "Virgem", "Libra", "Escorpião",
-        "Sagitário", "Capricórnio",
-        "Aquário", "Peixes"
+        "Áries","Touro","Gêmeos","Câncer","Leão","Virgem",
+        "Libra","Escorpião","Sagitário","Capricórnio","Aquário","Peixes"
     ];
 
     zodiacSign = signs[Math.floor(Math.random() * signs.length)];
 }
+
 
 // ======================================
 // ENVELHECER
