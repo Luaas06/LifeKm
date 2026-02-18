@@ -63,19 +63,65 @@ function updateBars() {
 // GERAR EVENTOS
 // ===============================
 
-function generateEvent() {
+let lastEvent = "";
 
-    const events = [
-        "Você fez um novo amigo 😊",
-        "Você ficou doente 🤒",
-        "Você ganhou dinheiro 💰",
-        "Você brigou com alguém 😡",
-        "Você teve um dia incrível 🌟"
-    ];
+function generateEvent(age) {
 
-    const randomEvent = events[Math.floor(Math.random() * events.length)];
-    document.getElementById("event").innerHTML = randomEvent;
+    let events = [];
+
+    if (age <= 2) {
+        events = [
+            { text: "Você aprendeu a engatinhar 🍼", happiness: 5, health: 0 },
+            { text: "Você chorou a noite inteira 😭", happiness: -5, health: -2 },
+            { text: "Você falou sua primeira palavra 👶", happiness: 10, health: 0 }
+        ];
+    }
+
+    else if (age <= 12) {
+        events = [
+            { text: "Você fez um novo amigo 🧒", happiness: 8, health: 0 },
+            { text: "Você ficou doente 🤒", happiness: -5, health: -10 },
+            { text: "Você ganhou um brinquedo 🎁", happiness: 6, health: 0 },
+            { text: "Você tirou nota baixa 📉", happiness: -6, health: 0 }
+        ];
+    }
+
+    else if (age <= 17) {
+        events = [
+            { text: "Você teve sua primeira paixão ❤️", happiness: 12, health: 0 },
+            { text: "Você brigou com um amigo 😡", happiness: -8, health: 0 },
+            { text: "Você começou a praticar esportes 🏀", happiness: 5, health: 5 }
+        ];
+    }
+
+    else {
+        events = [
+            { text: "Você conseguiu um emprego 💼", happiness: 10, health: 0 },
+            { text: "Você ficou estressado no trabalho 😩", happiness: -8, health: -5 },
+            { text: "Você começou um relacionamento 💕", happiness: 15, health: 0 }
+        ];
+    }
+
+    let event;
+
+    do {
+        event = events[Math.floor(Math.random() * events.length)];
+    } while (event.text === lastEvent);
+
+    lastEvent = event.text;
+
+    happiness += event.happiness;
+    health += event.health;
+
+    if (happiness > 100) happiness = 100;
+    if (health > 100) health = 100;
+    if (happiness < 0) happiness = 0;
+    if (health < 0) health = 0;
+
+    document.getElementById("eventText").innerText = event.text;
 }
+
+
 
 // ===============================
 // ENVELHECER
@@ -87,27 +133,20 @@ function ageUp() {
 
     age++;
 
-    let randomHappiness = Math.floor(Math.random() * 10);
-    let randomHealth = Math.floor(Math.random() * 8);
+    generateEvent(age);
 
-    happiness -= randomHappiness;
-    health -= randomHealth;
-
-    if (happiness < 0) happiness = 0;
-    if (health < 0) health = 0;
+    if (health <= 0) {
+        isAlive = false;
+        document.getElementById("event").innerHTML = "💀 Você morreu!";
+    }
 
     document.getElementById("age").textContent = age;
     document.getElementById("happiness").textContent = happiness;
     document.getElementById("health").textContent = health;
 
     updateBars();
-    generateEvent();
-
-    if (health <= 0) {
-        document.getElementById("event").innerHTML = "💀 Você morreu!";
-        isAlive = false;
-    }
 }
+
 
 // ===============================
 // INICIAR JOGO
