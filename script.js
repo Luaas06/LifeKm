@@ -112,37 +112,46 @@ function updateUI() {
 }
 
 function ageUp() {
+
     age++;
 
     happiness -= Math.floor(Math.random() * 5);
     health -= Math.floor(Math.random() * 3);
 
+    // Eventos específicos de idade
     if (age === 5) motherRelation += 5;
     if (age === 13) fatherRelation -= 10;
+
     if (age === 18) {
         motherRelation -= 5;
         fatherRelation -= 5;
+    }
 
-        // Chance da mãe engravidar se tiver menos de 45 anos
-if (motherAge < 58 && Math.random() < 0.15) {
-
-    const names = ["Bruno","Marina","Felipe","Larissa","Tiago","Camila"];
-
-    let newBaby = {
-        name: names[Math.floor(Math.random() * names.length)],
-        age: 0
-    };
-
-    siblings.push(newBaby);
-    addLifeEvent("Sua mãe teve um novo bebê chamado " + newBaby.name + "!");
-
+    // Envelhecer pais
     motherAge++;
-fatherAge++;
-siblings.forEach(s => s.age++);
+    fatherAge++;
 
+    // Envelhecer irmãos
+    siblings.forEach(s => s.age++);
+
+    // Chance da mãe engravidar (até 45 anos)
+    if (motherAge < 50 && Math.random() < 0.15) {
+
+        const names = ["Bruno","Marina","Felipe","Larissa","Tiago","Camila","Lucas","Ana"];
+
+        let newBaby = {
+            name: names[Math.floor(Math.random() * names.length)],
+            age: 0
+        };
+
+        siblings.push(newBaby);
+
+        addLifeEvent("👶 Sua mãe teve um novo bebê chamado " + newBaby.name + "!");
+    }
+
+    updateScreen();
 }
 
-    }
 
     limitStats();
     updateUI();
