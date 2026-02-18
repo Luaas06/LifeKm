@@ -10,6 +10,13 @@ let zodiacSign = "";
 let motherRelation = 80;
 let fatherRelation = 80;
 
+let siblings = [];
+let lifeLog = [];
+
+let motherAge = 0;
+let fatherAge = 0;
+
+
 startGame();
 
 function startGame() {
@@ -20,14 +27,37 @@ function startGame() {
 }
 
 function generateParents() {
+
     const maleNames = ["Carlos", "João", "Pedro", "Lucas", "Rafael"];
     const femaleNames = ["Ana", "Maria", "Julia", "Fernanda", "Beatriz"];
 
     fatherName = maleNames[Math.floor(Math.random() * maleNames.length)];
     motherName = femaleNames[Math.floor(Math.random() * femaleNames.length)];
 
+    fatherAge = Math.floor(Math.random() * 20) + 25; // 25 a 45
+    motherAge = Math.floor(Math.random() * 20) + 22; // 22 a 42
+
     const types = ["Parto normal", "Cesárea", "Prematuro"];
     birthType = types[Math.floor(Math.random() * types.length)];
+
+    generateSiblings();
+}
+function generateSiblings() {
+
+    siblings = [];
+
+    const possible = Math.floor(Math.random() * 3); // até 2 irmãos
+
+    const names = ["Bruno","Marina","Felipe","Larissa","Tiago","Camila"];
+
+    for (let i = 0; i < possible; i++) {
+
+        siblings.push({
+            name: names[Math.floor(Math.random() * names.length)],
+            age: Math.floor(Math.random() * 15) + 1
+        });
+
+    }
 }
 
 function generateZodiac() {
@@ -39,14 +69,32 @@ function generateZodiac() {
 }
 
 function updateBirthInfo() {
+
     document.getElementById("birthText").innerText =
-        "Você nasceu em uma família comum.";
+        "Você nasceu!";
 
     document.getElementById("birthType").innerText = birthType;
-    document.getElementById("motherName").innerText = motherName;
-    document.getElementById("fatherName").innerText = fatherName;
+    document.getElementById("motherName").innerText =
+        motherName + " (" + motherAge + " anos)";
+    document.getElementById("fatherName").innerText =
+        fatherName + " (" + fatherAge + " anos)";
     document.getElementById("zodiac").innerText = zodiacSign;
+
+    let siblingsText = "";
+
+    if (siblings.length > 0) {
+        siblings.forEach(s => {
+            siblingsText += s.name + " (" + s.age + " anos), ";
+        });
+        siblingsText = siblingsText.slice(0, -2);
+        addLifeEvent("Você nasceu com irmãos: " + siblingsText + ".");
+    } else {
+        addLifeEvent("Você nasceu sem irmãos.");
+    }
+
+    addLifeEvent("Seus pais são " + motherName + " e " + fatherName + ".");
 }
+
 
 function updateUI() {
     document.getElementById("age").innerText = age;
@@ -74,6 +122,26 @@ function ageUp() {
     if (age === 18) {
         motherRelation -= 5;
         fatherRelation -= 5;
+
+        // Chance da mãe engravidar se tiver menos de 45 anos
+if (motherAge < 58 && Math.random() < 0.15) {
+
+    const names = ["Bruno","Marina","Felipe","Larissa","Tiago","Camila"];
+
+    let newBaby = {
+        name: names[Math.floor(Math.random() * names.length)],
+        age: 0
+    };
+
+    siblings.push(newBaby);
+    addLifeEvent("Sua mãe teve um novo bebê chamado " + newBaby.name + "!");
+
+    motherAge++;
+fatherAge++;
+siblings.forEach(s => s.age++);
+
+}
+
     }
 
     limitStats();
