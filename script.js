@@ -8,9 +8,12 @@ let health = 100;
 let isAlive = true;
 let lastEvent = "";
 
-let parent1Relationship = 100;
-let parent2Relationship = 100;
-let hasTwoParents = true;
+let parent1Type = "Mãe";
+let parent2Type = "Pai";
+let hasSecondParent = true;
+
+let parent1Relationship = 0;
+let parent2Relationship = 0;
 
 
 // ===============================
@@ -50,9 +53,34 @@ function generateBirth() {
     let familyType = familyTypes[Math.floor(Math.random() * familyTypes.length)];
     let birthType = birthTypes[Math.floor(Math.random() * birthTypes.length)];
 
-    if (familyType.includes("mãe solteira") || familyType.includes("pai solteiro")) {
-    hasTwoParents = false;
+if (familyType.includes("mãe solteira")) {
+    parent1Type = "Mãe";
+    hasSecondParent = false;
 }
+
+else if (familyType.includes("pai solteiro")) {
+    parent1Type = "Pai";
+    hasSecondParent = false;
+}
+
+else if (familyType.includes("duas mães")) {
+    parent1Type = "Mãe";
+    parent2Type = "Mãe";
+    hasSecondParent = true;
+}
+
+else if (familyType.includes("dois pais")) {
+    parent1Type = "Pai";
+    parent2Type = "Pai";
+    hasSecondParent = true;
+}
+
+else {
+    parent1Type = "Mãe";
+    parent2Type = "Pai";
+    hasSecondParent = true;
+}
+
 // Definindo relacionamentos iniciais
 motherRelationship = Math.floor(Math.random() * 41) + 60; // 60 a 100
 
