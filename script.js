@@ -189,6 +189,21 @@ function closeRelationships() {
 window.onload = function () {
     generateBirth();
     updateBars();
+// Mudança aleatória nos relacionamentos
+let randomMotherChange = Math.floor(Math.random() * 11) - 5; // -5 a +5
+motherRelationship += randomMotherChange;
+
+if (hasTwoParents) {
+    let randomFatherChange = Math.floor(Math.random() * 11) - 5;
+    fatherRelationship += randomFatherChange;
+}
+
+// Impedir passar de 0 ou 100
+motherRelationship = Math.max(0, Math.min(100, motherRelationship));
+fatherRelationship = Math.max(0, Math.min(100, fatherRelationship));
+
+
+    
     updateRelationshipBars();
 
 };
