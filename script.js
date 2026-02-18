@@ -1,6 +1,6 @@
-// ===============================
+// =====================================
 // VARIÁVEIS DO PERSONAGEM
-// ===============================
+// =====================================
 
 let age = 0;
 let happiness = 100;
@@ -8,6 +8,7 @@ let health = 100;
 let isAlive = true;
 let lastEvent = "";
 
+// Sistema de pais
 let parent1Type = "Mãe";
 let parent2Type = "Pai";
 let hasSecondParent = true;
@@ -16,23 +17,17 @@ let parent1Relationship = 0;
 let parent2Relationship = 0;
 
 
-// ===============================
+// =====================================
 // GERAR NASCIMENTO
-// ===============================
+// =====================================
 
 function generateBirth() {
-
-    let birthDay = Math.floor(Math.random() * 28) + 1;
-    let birthMonth = Math.floor(Math.random() * 12) + 1;
-    let birthYear = 2026;
 
     const zodiacSigns = [
         "Capricórnio", "Aquário", "Peixes", "Áries",
         "Touro", "Gêmeos", "Câncer", "Leão",
         "Virgem", "Libra", "Escorpião", "Sagitário"
     ];
-
-    let zodiac = zodiacSigns[birthMonth - 1];
 
     const familyTypes = [
         "Você nasceu em uma família com mãe e pai 👨‍👩‍👧",
@@ -49,40 +44,41 @@ function generateBirth() {
         "Você nasceu de uma gravidez acidental."
     ];
 
+    let birthDay = Math.floor(Math.random() * 28) + 1;
+    let birthMonth = Math.floor(Math.random() * 12) + 1;
+    let birthYear = 2026;
+
+    let zodiac = zodiacSigns[birthMonth - 1];
     let familyType = familyTypes[Math.floor(Math.random() * familyTypes.length)];
     let birthType = birthTypes[Math.floor(Math.random() * birthTypes.length)];
 
-    // DEFINIR TIPOS DE PAIS
+    // Definir estrutura familiar
 
     if (familyType.includes("mãe solteira")) {
         parent1Type = "Mãe";
         hasSecondParent = false;
     }
-
     else if (familyType.includes("pai solteiro")) {
         parent1Type = "Pai";
         hasSecondParent = false;
     }
-
     else if (familyType.includes("duas mães")) {
         parent1Type = "Mãe";
         parent2Type = "Mãe";
         hasSecondParent = true;
     }
-
     else if (familyType.includes("dois pais")) {
         parent1Type = "Pai";
         parent2Type = "Pai";
         hasSecondParent = true;
     }
-
     else {
         parent1Type = "Mãe";
         parent2Type = "Pai";
         hasSecondParent = true;
     }
 
-    // RELACIONAMENTOS INICIAIS
+    // Relacionamentos iniciais
     parent1Relationship = Math.floor(Math.random() * 41) + 60;
 
     if (hasSecondParent) {
@@ -99,9 +95,9 @@ function generateBirth() {
 }
 
 
-// ===============================
+// =====================================
 // ATUALIZAR BARRAS PRINCIPAIS
-// ===============================
+// =====================================
 
 function updateBars() {
     document.getElementById("happinessBar").style.width = happiness + "%";
@@ -109,9 +105,9 @@ function updateBars() {
 }
 
 
-// ===============================
+// =====================================
 // ATUALIZAR BARRAS DE RELACIONAMENTO
-// ===============================
+// =====================================
 
 function updateRelationshipBars() {
 
@@ -123,9 +119,9 @@ function updateRelationshipBars() {
 }
 
 
-// ===============================
+// =====================================
 // GERAR EVENTOS
-// ===============================
+// =====================================
 
 function generateEvent() {
 
@@ -138,7 +134,6 @@ function generateEvent() {
             { text: "Você falou sua primeira palavra 👶", happiness: 10, health: 0 }
         ];
     }
-
     else if (age <= 12) {
         events = [
             { text: "Você fez um novo amigo 🧒", happiness: 8, health: 0 },
@@ -147,7 +142,6 @@ function generateEvent() {
             { text: "Você tirou nota baixa 📉", happiness: -6, health: 0 }
         ];
     }
-
     else if (age <= 17) {
         events = [
             { text: "Você teve sua primeira paixão ❤️", happiness: 12, health: 0 },
@@ -155,7 +149,6 @@ function generateEvent() {
             { text: "Você começou a praticar esportes 🏀", happiness: 5, health: 5 }
         ];
     }
-
     else {
         events = [
             { text: "Você conseguiu um emprego 💼", happiness: 10, health: 0 },
@@ -164,13 +157,7 @@ function generateEvent() {
         ];
     }
 
-    let event;
-
-    do {
-        event = events[Math.floor(Math.random() * events.length)];
-    } while (event.text === lastEvent);
-
-    lastEvent = event.text;
+    let event = events[Math.floor(Math.random() * events.length)];
 
     happiness += event.happiness;
     health += event.health;
@@ -182,9 +169,9 @@ function generateEvent() {
 }
 
 
-// ===============================
+// =====================================
 // ENVELHECER
-// ===============================
+// =====================================
 
 function ageUp() {
 
@@ -194,13 +181,11 @@ function ageUp() {
 
     generateEvent();
 
-    // MUDAR RELACIONAMENTOS A CADA ANO
-    let randomChange1 = Math.floor(Math.random() * 11) - 5;
-    parent1Relationship += randomChange1;
+    // Atualizar relacionamentos
+    parent1Relationship += Math.floor(Math.random() * 11) - 5;
 
     if (hasSecondParent) {
-        let randomChange2 = Math.floor(Math.random() * 11) - 5;
-        parent2Relationship += randomChange2;
+        parent2Relationship += Math.floor(Math.random() * 11) - 5;
     }
 
     parent1Relationship = Math.max(0, Math.min(100, parent1Relationship));
@@ -208,7 +193,7 @@ function ageUp() {
 
     if (health <= 0) {
         isAlive = false;
-        document.getElementById("event").innerHTML = "💀 Você morreu!";
+        document.getElementById("event").innerText = "💀 Você morreu!";
     }
 
     document.getElementById("age").textContent = age;
@@ -220,9 +205,9 @@ function ageUp() {
 }
 
 
-// ===============================
-// ABRIR / FECHAR RELACIONAMENTOS
-// ===============================
+// =====================================
+// RELACIONAMENTOS (ABRIR / FECHAR)
+// =====================================
 
 function openRelationships() {
 
@@ -245,15 +230,12 @@ function closeRelationships() {
 }
 
 
-// ===============================
+// =====================================
 // INICIAR JOGO
-// ===============================
+// =====================================
 
 window.onload = function () {
     generateBirth();
     updateBars();
     updateRelationshipBars();
 };
-
-
-
