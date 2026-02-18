@@ -42,7 +42,6 @@ function generateBirth() {
         "Você nasceu com um pai solteiro 👨"
     ];
 
-
     const birthTypes = [
         "Seu nascimento foi natural.",
         "Você nasceu por fertilização in vitro.",
@@ -53,43 +52,44 @@ function generateBirth() {
     let familyType = familyTypes[Math.floor(Math.random() * familyTypes.length)];
     let birthType = birthTypes[Math.floor(Math.random() * birthTypes.length)];
 
-if (familyType.includes("mãe solteira")) {
-    parent1Type = "Mãe";
-    hasSecondParent = false;
-}
+    // DEFINIR TIPOS DE PAIS
 
-else if (familyType.includes("pai solteiro")) {
-    parent1Type = "Pai";
-    hasSecondParent = false;
-}
+    if (familyType.includes("mãe solteira")) {
+        parent1Type = "Mãe";
+        hasSecondParent = false;
+    }
 
-else if (familyType.includes("duas mães")) {
-    parent1Type = "Mãe";
-    parent2Type = "Mãe";
-    hasSecondParent = true;
-}
+    else if (familyType.includes("pai solteiro")) {
+        parent1Type = "Pai";
+        hasSecondParent = false;
+    }
 
-else if (familyType.includes("dois pais")) {
-    parent1Type = "Pai";
-    parent2Type = "Pai";
-    hasSecondParent = true;
-}
+    else if (familyType.includes("duas mães")) {
+        parent1Type = "Mãe";
+        parent2Type = "Mãe";
+        hasSecondParent = true;
+    }
 
-else {
-    parent1Type = "Mãe";
-    parent2Type = "Pai";
-    hasSecondParent = true;
-}
+    else if (familyType.includes("dois pais")) {
+        parent1Type = "Pai";
+        parent2Type = "Pai";
+        hasSecondParent = true;
+    }
 
-// Definindo relacionamentos iniciais
-motherRelationship = Math.floor(Math.random() * 41) + 60; // 60 a 100
+    else {
+        parent1Type = "Mãe";
+        parent2Type = "Pai";
+        hasSecondParent = true;
+    }
 
-if (hasTwoParents) {
-    fatherRelationship = Math.floor(Math.random() * 41) + 60;
-} else {
-    fatherRelationship = 0;
-}
+    // RELACIONAMENTOS INICIAIS
+    parent1Relationship = Math.floor(Math.random() * 41) + 60;
 
+    if (hasSecondParent) {
+        parent2Relationship = Math.floor(Math.random() * 41) + 60;
+    } else {
+        parent2Relationship = 0;
+    }
 
     document.getElementById("birthInfo").innerHTML =
         `${familyType}<br>
@@ -98,14 +98,30 @@ if (hasTwoParents) {
          ♈ Signo: ${zodiac}`;
 }
 
+
 // ===============================
-// ATUALIZAR BARRAS
+// ATUALIZAR BARRAS PRINCIPAIS
 // ===============================
 
 function updateBars() {
     document.getElementById("happinessBar").style.width = happiness + "%";
     document.getElementById("healthBar").style.width = health + "%";
 }
+
+
+// ===============================
+// ATUALIZAR BARRAS DE RELACIONAMENTO
+// ===============================
+
+function updateRelationshipBars() {
+
+    document.getElementById("parent1Bar").style.width = parent1Relationship + "%";
+
+    if (hasSecondParent) {
+        document.getElementById("parent2Bar").style.width = parent2Relationship + "%";
+    }
+}
+
 
 // ===============================
 // GERAR EVENTOS
@@ -159,14 +175,12 @@ function generateEvent() {
     happiness += event.happiness;
     health += event.health;
 
-    // Limites
-    if (happiness > 100) happiness = 100;
-    if (health > 100) health = 100;
-    if (happiness < 0) happiness = 0;
-    if (health < 0) health = 0;
+    happiness = Math.max(0, Math.min(100, happiness));
+    health = Math.max(0, Math.min(100, health));
 
     document.getElementById("event").innerText = event.text;
 }
+
 
 // ===============================
 // ENVELHECER
@@ -180,6 +194,18 @@ function ageUp() {
 
     generateEvent();
 
+    // MUDAR RELACIONAMENTOS A CADA ANO
+    let randomChange1 = Math.floor(Math.random() * 11) - 5;
+    parent1Relationship += randomChange1;
+
+    if (hasSecondParent) {
+        let randomChange2 = Math.floor(Math.random() * 11) - 5;
+        parent2Relationship += randomChange2;
+    }
+
+    parent1Relationship = Math.max(0, Math.min(100, parent1Relationship));
+    parent2Relationship = Math.max(0, Math.min(100, parent2Relationship));
+
     if (health <= 0) {
         isAlive = false;
         document.getElementById("event").innerHTML = "💀 Você morreu!";
@@ -191,24 +217,33 @@ function ageUp() {
 
     updateBars();
     updateRelationshipBars();
-
 }
+
+
+// ===============================
+// ABRIR / FECHAR RELACIONAMENTOS
+// ===============================
+
 function openRelationships() {
+
     document.getElementById("relationshipsScreen").style.display = "block";
 
-    document.getElementById("motherBar").style.width = motherRelationship + "%";
+    document.getElementById("parent1Label").textContent = parent1Type;
+    document.getElementById("parent1Bar").style.width = parent1Relationship + "%";
 
-    if (hasTwoParents) {
-        document.getElementById("fatherSection").style.display = "block";
-        document.getElementById("fatherBar").style.width = fatherRelationship + "%";
+    if (hasSecondParent) {
+        document.getElementById("parent2Section").style.display = "block";
+        document.getElementById("parent2Label").textContent = parent2Type;
+        document.getElementById("parent2Bar").style.width = parent2Relationship + "%";
     } else {
-        document.getElementById("fatherSection").style.display = "none";
+        document.getElementById("parent2Section").style.display = "none";
     }
 }
 
 function closeRelationships() {
     document.getElementById("relationshipsScreen").style.display = "none";
 }
+
 
 // ===============================
 // INICIAR JOGO
@@ -217,23 +252,8 @@ function closeRelationships() {
 window.onload = function () {
     generateBirth();
     updateBars();
-// Mudança aleatória nos relacionamentos
-let randomMotherChange = Math.floor(Math.random() * 11) - 5; // -5 a +5
-motherRelationship += randomMotherChange;
-
-if (hasTwoParents) {
-    let randomFatherChange = Math.floor(Math.random() * 11) - 5;
-    fatherRelationship += randomFatherChange;
-}
-
-// Impedir passar de 0 ou 100
-motherRelationship = Math.max(0, Math.min(100, motherRelationship));
-fatherRelationship = Math.max(0, Math.min(100, fatherRelationship));
-
-
-    
     updateRelationshipBars();
-
 };
+
 
 
