@@ -8,6 +8,11 @@ let health = 100;
 let isAlive = true;
 let lastEvent = "";
 
+let parent1Relationship = 100;
+let parent2Relationship = 100;
+let hasTwoParents = true;
+
+
 // ===============================
 // GERAR NASCIMENTO
 // ===============================
@@ -34,6 +39,7 @@ function generateBirth() {
         "Você nasceu com um pai solteiro 👨"
     ];
 
+
     const birthTypes = [
         "Seu nascimento foi natural.",
         "Você nasceu por fertilização in vitro.",
@@ -43,6 +49,19 @@ function generateBirth() {
 
     let familyType = familyTypes[Math.floor(Math.random() * familyTypes.length)];
     let birthType = birthTypes[Math.floor(Math.random() * birthTypes.length)];
+
+    if (familyType.includes("mãe solteira") || familyType.includes("pai solteiro")) {
+    hasTwoParents = false;
+}
+// Definindo relacionamentos iniciais
+motherRelationship = Math.floor(Math.random() * 41) + 60; // 60 a 100
+
+if (hasTwoParents) {
+    fatherRelationship = Math.floor(Math.random() * 41) + 60;
+} else {
+    fatherRelationship = 0;
+}
+
 
     document.getElementById("birthInfo").innerHTML =
         `${familyType}<br>
@@ -143,6 +162,8 @@ function ageUp() {
     document.getElementById("health").textContent = health;
 
     updateBars();
+    updateRelationshipBars();
+
 }
 
 // ===============================
@@ -152,6 +173,8 @@ function ageUp() {
 window.onload = function () {
     generateBirth();
     updateBars();
+    updateRelationshipBars();
+
 };
 
 
