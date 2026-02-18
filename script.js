@@ -41,13 +41,14 @@ function generateBirth() {
 
     
     // MOSTRAR TEXTO DE NASCIMENTO
-    document.getElementById("birthInfo").innerHTML =
-    "Você nasceu em uma família comum.<br><br>" +
-    "🍼 Tipo de nascimento: " + birthType + "<br>" +
-    "👩 Mãe: " + motherName + "<br>" +
-    "👨 Pai: " + fatherName + "<br>" +
-    "♈ Signo: " + zodiacSign;
+   document.getElementById("birthInfo").innerText =
+        "Você nasceu em uma família comum.";
 
+    // Informações separadas (PROFISSIONAL)
+    document.getElementById("birthType").innerText = birthType;
+    document.getElementById("motherName").innerText = motherName;
+    document.getElementById("fatherName").innerText = fatherName;
+    document.getElementById("zodiac").innerText = zodiacSign;
 
     updateUI();
     updateRelationshipBars();
