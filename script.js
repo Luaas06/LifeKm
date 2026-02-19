@@ -210,11 +210,13 @@ function ageUp(){
     siblings.forEach(s=>s.age++);
     cousins.forEach(c=>c.age++);
 
+    // 🔹 Evento padrão anual
+    addLifeEvent("Nada de especial aconteceu este ano.");
+
     document.getElementById("ageDisplay").innerText = age + " anos";
 
     updateUI();
 }
-
 
 // ===============================
 // ATUALIZAR FAMÍLIA
@@ -256,6 +258,28 @@ function toggleFamily(){
         panel.style.display === "none" ? "block" : "none";
 }
 
+function addLifeEvent(text){
 
+    const log = document.getElementById("lifeLog");
+    if(!log) return;
+
+    let ageBlock = document.getElementById("age-" + age);
+
+    if(!ageBlock){
+        ageBlock = document.createElement("div");
+        ageBlock.id = "age-" + age;
+
+        const title = document.createElement("h4");
+        title.innerText = age + " ano" + (age > 1 ? "s" : "");
+        ageBlock.appendChild(title);
+
+        log.prepend(ageBlock);
+    }
+
+    const p = document.createElement("p");
+    p.innerText = "• " + text;
+
+    ageBlock.appendChild(p);
+}
 
 
