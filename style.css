@@ -78,3 +78,51 @@ button:hover {
     border-radius: 10px;
     width: 50%;
 }
+.game-container {
+    display: grid;
+    grid-template-columns: 1fr 200px 2fr;
+    height: 100vh;
+}
+
+.left-panel {
+    background: #f4f4f4;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+}
+
+.center-panel {
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.right-panel {
+    background: #fafafa;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.year-block {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.relation-card {
+    margin-bottom: 10px;
+}
+
+.bar {
+    height: 8px;
+    background: #ddd;
+    border-radius: 4px;
+}
+
+.fill {
+    height: 100%;
+    background: #4caf50;
+    border-radius: 4px;
+}
