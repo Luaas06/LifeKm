@@ -8,71 +8,48 @@
 
 <body>
 
-<header>
-    LifeKm
+<header class="top-bar">
+    <h1>LifeKm</h1>
+    <span id="ageDisplay">0 anos</span>
 </header>
 
-<div class="container">
+<div class="main-content">
 
-    <!-- ESQUERDA -->
-    <div class="left-panel card">
-
-        <h2>👶 Nascimento</h2>
-
-        <p id="birthText"></p>
-
-        <p><strong>Nome:</strong> <span id="playerName">Você</span></p>
-        <p><strong>Idade:</strong> <span id="age">0</span></p>
-        <p><strong>Tipo de nascimento:</strong> <span id="birthType"></span></p>
-        <p><strong>Signo:</strong> <span id="zodiac"></span></p>
-
-        <hr>
-
-        <p><strong>👩 Mãe:</strong> <span id="motherName"></span></p>
-        <p><strong>👨 Pai:</strong> <span id="fatherName"></span></p>
-
-        <hr>
-
-        <h3>👧 Irmãos</h3>
-        <div id="siblingsContainer"></div>
-
-    </div>
-
-    <!-- CENTRO -->
-    <div class="center-panel">
-        <button onclick="ageUp()">Avançar 1 ano</button>
-        <button onclick="toggleFamily()">Relacionamentos</button>
-    </div>
-
-    <!-- DIREITA -->
-    <div class="right-panel card">
+    <div class="life-card">
         <h2>📜 Sua Vida</h2>
         <div id="lifeLog"></div>
     </div>
 
-</div>
+    <button class="age-button" onclick="ageUp()">+ Avançar 1 ano</button>
 
-<!-- PAINEL FAMÍLIA -->
-<div id="familyPanel" class="card" style="display: none; max-width: 500px; margin: 20px auto;">
+    <div class="status-card">
+        <div class="status">
+            <label>😊 Felicidade</label>
+            <div class="bar"><div class="fill" style="width: 60%"></div></div>
+        </div>
 
-    <h3>👨‍👩‍👧 Família</h3>
+        <div class="status">
+            <label>💪 Saúde</label>
+            <div class="bar"><div class="fill" style="width: 70%"></div></div>
+        </div>
 
-    <p>👩 Mãe: <span id="motherRelationText"></span></p>
-    <div class="bar">
-        <div id="motherBar" class="fill"></div>
+        <div class="status">
+            <label>🧠 Inteligência</label>
+            <div class="bar"><div class="fill" style="width: 80%"></div></div>
+        </div>
     </div>
 
-    <p>👨 Pai: <span id="fatherRelationText"></span></p>
-    <div class="bar">
-        <div id="fatherBar" class="fill"></div>
-    </div>
-
-    <button onclick="toggleFamily()">Fechar</button>
-
 </div>
+
+<nav class="bottom-nav">
+    <button onclick="toggleFamily()">👨‍👩‍👧 Família</button>
+    <button>❤️ Relacionamentos</button>
+    <button>💼 Carreira</button>
+</nav>
 
 <script src="script.js"></script>
 
 </body>
 </html>
+
 
