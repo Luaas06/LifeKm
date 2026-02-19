@@ -45,8 +45,8 @@ function generateParents() {
     fatherName = maleNames[Math.floor(Math.random() * maleNames.length)];
     motherName = femaleNames[Math.floor(Math.random() * femaleNames.length)];
 
-    fatherAge = Math.floor(Math.random() * 20) + 25; // 25–45
-    motherAge = Math.floor(Math.random() * 20) + 22; // 22–42
+    fatherAge = Math.floor(Math.random() * 20) + 25;
+    motherAge = Math.floor(Math.random() * 20) + 22;
 
     const types = ["Parto normal", "Cesárea", "Prematuro"];
     birthType = types[Math.floor(Math.random() * types.length)];
@@ -63,13 +63,14 @@ function generateSiblings() {
 
     siblings = [];
 
-    const possible = Math.floor(Math.random() * 3); // até 2 irmãos
+    const possible = Math.floor(Math.random() * 3);
     const names = ["Bruno","Marina","Felipe","Larissa","Tiago","Camila"];
 
     for (let i = 0; i < possible; i++) {
         siblings.push({
             name: names[Math.floor(Math.random() * names.length)],
-            age: Math.floor(Math.random() * 15) + 1
+            age: Math.floor(Math.random() * 15) + 1,
+            relation: 70
         });
     }
 }
@@ -96,21 +97,13 @@ function generateZodiac() {
 
 function updateBirthInfo() {
 
-    document.getElementById("birthText").innerText =
-        "Você nasceu!";
-
+    document.getElementById("birthText").innerText = "Você nasceu!";
     document.getElementById("birthType").innerText = birthType;
-
-    document.getElementById("motherName").innerText =
-        motherName + " (" + motherAge + " anos)";
-
-    document.getElementById("fatherName").innerText =
-        fatherName + " (" + fatherAge + " anos)";
-
     document.getElementById("zodiac").innerText = zodiacSign;
 
-    if (siblings.length > 0) {
+    updateFamilyInfo();
 
+    if (siblings.length > 0) {
         let siblingsText = siblings
             .map(s => s.name + " (" + s.age + " anos)")
             .join(", ");
@@ -143,13 +136,39 @@ function updateUI() {
     document.getElementById("motherBar").style.width = motherRelation + "%";
     document.getElementById("fatherBar").style.width = fatherRelation + "%";
 
+    updateFamilyInfo();
+}
+
+
+// ===============================
+// ATUALIZAR DADOS FAMÍLIA
+// ===============================
+
+function updateFamilyInfo() {
+
     document.getElementById("motherName").innerText =
-    motherName + " (" + motherAge + " anos)";
+        motherName + " (" + motherAge + " anos)";
 
     document.getElementById("fatherName").innerText =
-    fatherName + " (" + fatherAge + " anos)";
+        fatherName + " (" + fatherAge + " anos)";
 
+    const siblingsContainer = document.getElementById("siblingsContainer");
+
+    if (siblingsContainer) {
+        siblingsContainer.innerHTML = "";
+
+        siblings.forEach(s => {
+            const div = document.createElement("div");
+            div.innerText = s.name + " (" + s.age + " anos)";
+            siblingsContainer.appendChild(div);
+        });
+    }
 }
+
+
+// ===============================
+// ENVELHECER
+// ===============================
 
 function ageUp() {
 
@@ -157,43 +176,33 @@ function ageUp() {
     motherAge++;
     fatherAge++;
 
-    let yearDiv = document.createElement("div");
-    yearDiv.className = "year-block";
-
-    let yearTitle = document.createElement("h3");
-    yearTitle.innerText = age + " anos";
-    yearDiv.appendChild(yearTitle);
-
-    let eventText = document.createElement("p");
+    siblings.forEach(s => s.age++);
 
     let eventOccurred = false;
 
-    // Exemplo de evento
+    // Chance de novo irmão
     if (Math.random() < 0.3) {
-        let babyName = generateRandomName();
-        addSibling(babyName);
-        eventText.innerText = "👶 Sua mãe teve um bebê chamado " + babyName + "!";
+
+        const names = ["Arthur","Helena","Miguel","Sofia","Theo","Laura"];
+        let babyName = names[Math.floor(Math.random() * names.length)];
+
+        siblings.push({
+            name: babyName,
+            age: 0,
+            relation: 70
+        });
+
+        addLifeEvent("👶 Sua mãe teve um bebê chamado " + babyName + "!");
         eventOccurred = true;
     }
 
     if (!eventOccurred) {
-        eventText.innerText = "Nada de especial aconteceu este ano.";
-        eventText.style.opacity = "0.6";
+        addLifeEvent("Nada de especial aconteceu este ano.");
     }
 
-    yearDiv.appendChild(eventText);
-
-    let lifeContainer = document.getElementById("lifeEvents");
-    lifeContainer.prepend(yearDiv);
-
+    limitStats();
     updateUI();
 }
-
-// ===============================
-// ENVELHECER
-// ===============================
-
-
 
 
 // ===============================
@@ -215,16 +224,15 @@ function limitStats() {
 function addLifeEvent(text) {
 
     const log = document.getElementById("lifeLog");
-
     if (!log) return;
 
-    // Verifica se já existe bloco da idade atual
     let ageBlock = document.getElementById("age-" + age);
 
     if (!ageBlock) {
+
         ageBlock = document.createElement("div");
         ageBlock.id = "age-" + age;
-        ageBlock.style.marginBottom = "10px";
+        ageBlock.style.marginBottom = "15px";
 
         const title = document.createElement("h4");
         title.innerText = age + " ano" + (age > 1 ? "s" : "");
@@ -241,7 +249,6 @@ function addLifeEvent(text) {
 }
 
 
-
 // ===============================
 // MOSTRAR/OCULTAR FAMÍLIA
 // ===============================
@@ -256,5 +263,6 @@ function toggleFamily() {
         panel.style.display = "none";
     }
 }
+
 
 
