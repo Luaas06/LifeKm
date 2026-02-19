@@ -335,3 +335,9 @@ body {
     background: #c084fc;
     border-radius: 10px;
 }
+.birth-info {
+    margin-bottom: 15px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
