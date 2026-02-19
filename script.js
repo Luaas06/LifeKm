@@ -16,7 +16,7 @@ let paternalUncles = [];
 
 let siblings = [];
 let cousins = [];
-
+let schoolStage = "Nenhuma"; 
 
 // ===============================
 // INICIAR JOGO
@@ -191,11 +191,32 @@ function generateRelatives(max, femaleNames, maleNames, maxAge){
     return arr;
 }
 
+function updateSchool(){
+//function updateSchool(){
 
-// ===============================
+    let previousStage = schoolStage;
+
+    if(age >= 4 && age <= 5){
+        schoolStage = "Pré-escola";
+    }
+    else if(age >= 6 && age <= 14){
+        schoolStage = "Ensino Fundamental";
+    }
+    else if(age >= 15 && age <= 17){
+        schoolStage = "Ensino Médio";
+    }
+    else{
+        schoolStage = "Nenhuma";
+    }
+
+    // Só registra evento se mudou de fase
+    if(previousStage !== schoolStage && schoolStage !== "Nenhuma"){
+        addLifeEvent("🎒 Você começou a " + schoolStage + ".");
+    }
+} 
+===============================
 // ENVELHECER
 // ===============================
-
 function ageUp(){
 
     age++;
@@ -210,13 +231,16 @@ function ageUp(){
     siblings.forEach(s=>s.age++);
     cousins.forEach(c=>c.age++);
 
-    // 🔹 Evento padrão anual
+    updateSchool();
+
+    // Evento padrão se nada importante acontecer
     addLifeEvent("Nada de especial aconteceu este ano.");
 
     document.getElementById("ageDisplay").innerText = age + " anos";
 
     updateUI();
 }
+
 
 // ===============================
 // ATUALIZAR FAMÍLIA
