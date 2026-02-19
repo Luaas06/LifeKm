@@ -142,6 +142,13 @@ function updateUI() {
 
     document.getElementById("motherBar").style.width = motherRelation + "%";
     document.getElementById("fatherBar").style.width = fatherRelation + "%";
+
+    document.getElementById("motherName").innerText =
+    motherName + " (" + motherAge + " anos)";
+
+    document.getElementById("fatherName").innerText =
+    fatherName + " (" + fatherAge + " anos)";
+
 }
 
 
@@ -214,11 +221,28 @@ function addLifeEvent(text) {
 
     if (!log) return;
 
-    const p = document.createElement("p");
-    p.innerText = text;
+    // Verifica se já existe bloco da idade atual
+    let ageBlock = document.getElementById("age-" + age);
 
-    log.prepend(p);
+    if (!ageBlock) {
+        ageBlock = document.createElement("div");
+        ageBlock.id = "age-" + age;
+        ageBlock.style.marginBottom = "10px";
+
+        const title = document.createElement("h4");
+        title.innerText = age + " ano" + (age > 1 ? "s" : "");
+        title.style.marginBottom = "5px";
+
+        ageBlock.appendChild(title);
+        log.prepend(ageBlock);
+    }
+
+    const p = document.createElement("p");
+    p.innerText = "• " + text;
+
+    ageBlock.appendChild(p);
 }
+
 
 
 // ===============================
