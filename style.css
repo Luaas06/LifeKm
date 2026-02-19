@@ -153,7 +153,8 @@ header {
     background: white;
     border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+
 }
 
 /* LADO ESQUERDO */
@@ -229,7 +230,7 @@ body {
     background: #ffffff;
     padding: 20px;
     border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
     margin-bottom: 20px;
     max-height: 300px;
     overflow-y: auto;
@@ -258,7 +259,8 @@ body {
     background: #ffffff;
     padding: 20px;
     border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+
 }
 
 .status {
@@ -315,4 +317,21 @@ body {
 
 .age-circle:hover {
     transform: scale(1.1);
+}
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.age-circle {
+    animation: pulse 2s infinite;
+}
+.life-card::-webkit-scrollbar {
+    width: 6px;
+}
+
+.life-card::-webkit-scrollbar-thumb {
+    background: #c084fc;
+    border-radius: 10px;
 }
