@@ -11,48 +11,28 @@
 <h1>LifeKm</h1>
 
 <!-- ================= Nascimento ================= -->
-<div class="section">
-    <h2>👶 Seu Nascimento</h2>
-    <p id="birthText"></p>
-    <p>🍼 Tipo: <span id="birthType"></span></p>
-    <p>👩 Mãe: <span id="motherName"></span></p>
-    <p>👨 Pai: <span id="fatherName"></span></p>
-    <p>♈ Signo: <span id="zodiac"></span></p>
-</div>
+<div class="game-container">
 
-<hr>
-
-<!-- ================= Status ================= -->
-<div class="section">
-
-    <p>Idade: <span id="age">0</span></p>
-
-    <p>Felicidade: <span id="happiness">100</span></p>
-    <div class="bar">
-        <div id="happinessBar" class="fill"></div>
+    <div class="left-panel">
+        <h2>👶 Nascimento</h2>
+        <p>Nome: <span id="playerName"></span></p>
+        <p>Idade: <span id="age">0</span></p>
+        <p>Mãe: <span id="motherName"></span></p>
+        <p>Pai: <span id="fatherName"></span></p>
     </div>
 
-    <p>Saúde: <span id="health">100</span></p>
-    <div class="bar">
-        <div id="healthBar" class="fill"></div>
+    <div class="center-panel">
+        <button onclick="ageUp()">Avançar 1 ano</button>
+        <button onclick="openRelationships()">Relacionamentos</button>
     </div>
 
-    <button onclick="ageUp()">Envelhecer</button>
-    <button onclick="toggleFamily()">Relacionamentos</button>
+    <div class="right-panel">
+        <h2>📜 Sua Vida</h2>
+        <div id="lifeEvents"></div>
+    </div>
 
 </div>
 
-<!-- ================= LOG DA VIDA ================= -->
-<div class="section">
-    <h3>📜 Sua Vida</h3>
-    <div id="lifeLog"
-         style="max-height:200px;
-                overflow-y:auto;
-                background:white;
-                padding:10px;
-                border-radius:10px;">
-    </div>
-</div>
 
 <!-- ================= Família ================= -->
 <div id="familyPanel" style="display: none;" class="section">
