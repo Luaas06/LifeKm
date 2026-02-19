@@ -151,52 +151,49 @@ function updateUI() {
 
 }
 
+function ageUp() {
+
+    age++;
+    motherAge++;
+    fatherAge++;
+
+    let yearDiv = document.createElement("div");
+    yearDiv.className = "year-block";
+
+    let yearTitle = document.createElement("h3");
+    yearTitle.innerText = age + " anos";
+    yearDiv.appendChild(yearTitle);
+
+    let eventText = document.createElement("p");
+
+    let eventOccurred = false;
+
+    // Exemplo de evento
+    if (Math.random() < 0.3) {
+        let babyName = generateRandomName();
+        addSibling(babyName);
+        eventText.innerText = "👶 Sua mãe teve um bebê chamado " + babyName + "!";
+        eventOccurred = true;
+    }
+
+    if (!eventOccurred) {
+        eventText.innerText = "Nada de especial aconteceu este ano.";
+        eventText.style.opacity = "0.6";
+    }
+
+    yearDiv.appendChild(eventText);
+
+    let lifeContainer = document.getElementById("lifeEvents");
+    lifeContainer.prepend(yearDiv);
+
+    updateUI();
+}
 
 // ===============================
 // ENVELHECER
 // ===============================
 
-function ageUp() {
 
-    age++;
-
-    happiness -= Math.floor(Math.random() * 5);
-    health -= Math.floor(Math.random() * 3);
-
-    // Eventos por idade
-    if (age === 5) motherRelation += 5;
-    if (age === 13) fatherRelation -= 10;
-
-    if (age === 18) {
-        motherRelation -= 5;
-        fatherRelation -= 5;
-    }
-
-    // Envelhecer pais
-    motherAge++;
-    fatherAge++;
-
-    // Envelhecer irmãos
-    siblings.forEach(s => s.age++);
-
-    // Chance da mãe engravidar (até 50 anos)
-    if (motherAge < 50 && Math.random() < 0.15) {
-
-        const names = ["Bruno","Marina","Felipe","Larissa","Tiago","Camila","Lucas","Ana"];
-
-        let newBaby = {
-            name: names[Math.floor(Math.random() * names.length)],
-            age: 0
-        };
-
-        siblings.push(newBaby);
-
-        addLifeEvent("👶 Sua mãe teve um novo bebê chamado " + newBaby.name + "!");
-    }
-
-    limitStats();
-    updateUI();
-}
 
 
 // ===============================
