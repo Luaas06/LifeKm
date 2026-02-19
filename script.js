@@ -6,17 +6,8 @@ let age = 0;
 let happiness = 100;
 let health = 100;
 
-let motherName = "";
-let fatherName = "";
-let birthType = "";
-let zodiacSign = "";
-
-let motherRelation = 80;
-let fatherRelation = 80;
-
+let birthData = {};
 let siblings = [];
-let motherAge = 0;
-let fatherAge = 0;
 
 
 // ===============================
@@ -26,42 +17,137 @@ let fatherAge = 0;
 startGame();
 
 function startGame() {
-    generateParents();
-    generateZodiac();
-    updateBirthInfo();
+    generateBirth();
+    generateSiblings();
     updateUI();
 }
 
 
 // ===============================
-// GERAR PAIS
+// GERAR NASCIMENTO COMPLETO
 // ===============================
 
-function generateParents() {
+function generateBirth() {
 
-    const maleNames = ["Carlos", "João", "Pedro", "Lucas", "Rafael"];
-    const femaleNames = ["Ana", "Maria", "Julia", "Fernanda", "Beatriz"];
+    const birthTypes = [
+        "Parto normal",
+        "Cesárea",
+        "Prematuro",
+        "Fertilização in vitro",
+        "Barriga de aluguel",
+        "Barriga solidária",
+        "Adoção"
+    ];
 
-    fatherName = maleNames[Math.floor(Math.random() * maleNames.length)];
-    motherName = femaleNames[Math.floor(Math.random() * femaleNames.length)];
+    const familyTypes = [
+        "mae_pai",
+        "duas_maes",
+        "dois_pais",
+        "mae_solteira",
+        "pai_solteiro"
+    ];
 
-    fatherAge = Math.floor(Math.random() * 20) + 25;
-    motherAge = Math.floor(Math.random() * 20) + 22;
+    const maleNames = ["Carlos","João","Pedro","Lucas","Rafael"];
+    const femaleNames = ["Ana","Maria","Julia","Fernanda","Beatriz"];
 
-    const types = ["Parto normal", "Cesárea", "Prematuro"];
-    birthType = types[Math.floor(Math.random() * types.length)];
+    const randomDay = Math.floor(Math.random() * 28) + 1;
+    const randomMonth = Math.floor(Math.random() * 12) + 1;
+    const randomYear = 2005 + Math.floor(Math.random() * 15);
 
-    generateSiblings();
+    const familyType = familyTypes[Math.floor(Math.random() * familyTypes.length)];
+
+    let motherName = femaleNames[Math.floor(Math.random() * femaleNames.length)];
+    let fatherName = maleNames[Math.floor(Math.random() * maleNames.length)];
+
+    let motherAge = Math.floor(Math.random() * 20) + 18;
+    let fatherAge = Math.floor(Math.random() * 20) + 18;
+
+    birthData = {
+        day: randomDay,
+        month: randomMonth,
+        year: randomYear,
+        birthType: birthTypes[Math.floor(Math.random() * birthTypes.length)],
+        zodiac: generateZodiac(randomMonth),
+        familyType,
+        motherName,
+        fatherName,
+        motherAge,
+        fatherAge
+    };
+
+    renderBirthInfo();
+    addInitialFamilyLog();
 }
 
 
 // ===============================
-// GERAR IRMÃOS INICIAIS
+// SIGNO
+// ===============================
+
+function generateZodiac(month) {
+
+    const signs = [
+        "Capricórnio","Aquário","Peixes","Áries","Touro","Gêmeos",
+        "Câncer","Leão","Virgem","Libra","Escorpião","Sagitário"
+    ];
+
+    return signs[month - 1];
+}
+
+
+// ===============================
+// MOSTRAR NASCIMENTO NA TELA
+// ===============================
+
+function renderBirthInfo() {
+
+    const container = document.getElementById("birthInfo");
+
+    let familyText = "";
+
+    switch(birthData.familyType) {
+        case "mae_pai":
+            familyText = `👨‍👩‍👧 Pais: ${birthData.motherName} e ${birthData.fatherName}`;
+            break;
+        case "duas_maes":
+            familyText = `👩‍👩‍👦 Duas mães: ${birthData.motherName} e ${birthData.fatherName}`;
+            break;
+        case "dois_pais":
+            familyText = `👨‍👨‍👦 Dois pais: ${birthData.motherName} e ${birthData.fatherName}`;
+            break;
+        case "mae_solteira":
+            familyText = `👩 Mãe solteira: ${birthData.motherName}`;
+            break;
+        case "pai_solteiro":
+            familyText = `👨 Pai solteiro: ${birthData.fatherName}`;
+            break;
+    }
+
+    let teenText = "";
+
+    if (birthData.motherAge < 20 && birthData.fatherAge < 20) {
+        teenText = "👶 Ambos eram adolescentes.";
+    } else if (birthData.motherAge < 20) {
+        teenText = "👩 Sua mãe era adolescente.";
+    } else if (birthData.fatherAge < 20) {
+        teenText = "👨 Seu pai era adolescente.";
+    }
+
+    container.innerHTML = `
+        📅 ${birthData.day}/${birthData.month}/${birthData.year} <br>
+        ♈ ${birthData.zodiac} <br>
+        👶 ${birthData.birthType} <br>
+        ${familyText} <br>
+        ${teenText}
+    `;
+}
+
+
+// ===============================
+// IRMÃOS
 // ===============================
 
 function generateSiblings() {
-
-    siblings = [];
 
     const possible = Math.floor(Math.random() * 3);
     const names = ["Bruno","Marina","Felipe","Larissa","Tiago","Camila"];
@@ -69,98 +155,7 @@ function generateSiblings() {
     for (let i = 0; i < possible; i++) {
         siblings.push({
             name: names[Math.floor(Math.random() * names.length)],
-            age: Math.floor(Math.random() * 15) + 1,
-            relation: 70
-        });
-    }
-}
-
-
-// ===============================
-// GERAR SIGNO
-// ===============================
-
-function generateZodiac() {
-
-    const signs = [
-        "Áries","Touro","Gêmeos","Câncer","Leão","Virgem",
-        "Libra","Escorpião","Sagitário","Capricórnio","Aquário","Peixes"
-    ];
-
-    zodiacSign = signs[Math.floor(Math.random() * signs.length)];
-}
-
-
-// ===============================
-// MOSTRAR INFORMAÇÕES DE NASCIMENTO
-// ===============================
-
-function updateBirthInfo() {
-
-    document.getElementById("birthText").innerText = "Você nasceu!";
-    document.getElementById("birthType").innerText = birthType;
-    document.getElementById("zodiac").innerText = zodiacSign;
-
-    updateFamilyInfo();
-
-    if (siblings.length > 0) {
-        let siblingsText = siblings
-            .map(s => s.name + " (" + s.age + " anos)")
-            .join(", ");
-
-        addLifeEvent("👶 Você nasceu com irmãos: " + siblingsText + ".");
-    } else {
-        addLifeEvent("👶 Você nasceu sem irmãos.");
-    }
-
-    addLifeEvent("👨‍👩‍👧 Seus pais são " + motherName + " e " + fatherName + ".");
-}
-
-
-// ===============================
-// ATUALIZAR INTERFACE
-// ===============================
-
-function updateUI() {
-
-    document.getElementById("age").innerText = age;
-    document.getElementById("happiness").innerText = happiness;
-    document.getElementById("health").innerText = health;
-
-    document.getElementById("happinessBar").style.width = happiness + "%";
-    document.getElementById("healthBar").style.width = health + "%";
-
-    document.getElementById("motherRelationText").innerText = motherRelation;
-    document.getElementById("fatherRelationText").innerText = fatherRelation;
-
-    document.getElementById("motherBar").style.width = motherRelation + "%";
-    document.getElementById("fatherBar").style.width = fatherRelation + "%";
-
-    updateFamilyInfo();
-}
-
-
-// ===============================
-// ATUALIZAR DADOS FAMÍLIA
-// ===============================
-
-function updateFamilyInfo() {
-
-    document.getElementById("motherName").innerText =
-        motherName + " (" + motherAge + " anos)";
-
-    document.getElementById("fatherName").innerText =
-        fatherName + " (" + fatherAge + " anos)";
-
-    const siblingsContainer = document.getElementById("siblingsContainer");
-
-    if (siblingsContainer) {
-        siblingsContainer.innerHTML = "";
-
-        siblings.forEach(s => {
-            const div = document.createElement("div");
-            div.innerText = s.name + " (" + s.age + " anos)";
-            siblingsContainer.appendChild(div);
+            age: Math.floor(Math.random() * 15) + 1
         });
     }
 }
@@ -173,14 +168,12 @@ function updateFamilyInfo() {
 function ageUp() {
 
     age++;
-    motherAge++;
-    fatherAge++;
-
     siblings.forEach(s => s.age++);
+
+    document.getElementById("ageDisplay").innerText = age + " anos";
 
     let eventOccurred = false;
 
-    // Chance de novo irmão
     if (Math.random() < 0.3) {
 
         const names = ["Arthur","Helena","Miguel","Sofia","Theo","Laura"];
@@ -188,8 +181,7 @@ function ageUp() {
 
         siblings.push({
             name: babyName,
-            age: 0,
-            relation: 70
+            age: 0
         });
 
         addLifeEvent("👶 Sua mãe teve um bebê chamado " + babyName + "!");
@@ -200,31 +192,17 @@ function ageUp() {
         addLifeEvent("Nada de especial aconteceu este ano.");
     }
 
-    limitStats();
     updateUI();
 }
 
 
 // ===============================
-// LIMITAR STATUS 0–100
-// ===============================
-
-function limitStats() {
-    happiness = Math.max(0, Math.min(100, happiness));
-    health = Math.max(0, Math.min(100, health));
-    motherRelation = Math.max(0, Math.min(100, motherRelation));
-    fatherRelation = Math.max(0, Math.min(100, fatherRelation));
-}
-
-
-// ===============================
-// LOG DE VIDA (ESTILO BITLIFE)
+// LOG ESTILO BITLIFE
 // ===============================
 
 function addLifeEvent(text) {
 
     const log = document.getElementById("lifeLog");
-    if (!log) return;
 
     let ageBlock = document.getElementById("age-" + age);
 
@@ -235,7 +213,7 @@ function addLifeEvent(text) {
         ageBlock.style.marginBottom = "15px";
 
         const title = document.createElement("h4");
-        title.innerText = age + " ano" + (age > 1 ? "s" : "");
+        title.innerText = age + " ano" + (age !== 1 ? "s" : "");
         title.style.marginBottom = "5px";
 
         ageBlock.appendChild(title);
@@ -250,19 +228,33 @@ function addLifeEvent(text) {
 
 
 // ===============================
-// MOSTRAR/OCULTAR FAMÍLIA
+// LOG INICIAL
 // ===============================
 
-function toggleFamily() {
+function addInitialFamilyLog() {
 
-    const panel = document.getElementById("familyPanel");
+    if (siblings.length > 0) {
+        let siblingsText = siblings
+            .map(s => s.name + " (" + s.age + " anos)")
+            .join(", ");
 
-    if (panel.style.display === "none" || panel.style.display === "") {
-        panel.style.display = "block";
+        addLifeEvent("👶 Você nasceu com irmãos: " + siblingsText + ".");
     } else {
-        panel.style.display = "none";
+        addLifeEvent("👶 Você nasceu sem irmãos.");
     }
 }
+
+
+// ===============================
+// ATUALIZAR STATUS
+// ===============================
+
+function updateUI() {
+
+    document.getElementById("happinessBar").style.width = happiness + "%";
+    document.getElementById("healthBar").style.width = health + "%";
+}
+
 
 
 
