@@ -1,10 +1,9 @@
 body {
     margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #bde0fe 50%, #ffc8dd 50%);
-    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f3e8ff;
 }
+
 
 .container {
     margin-top: 100px;
@@ -201,12 +200,14 @@ body {
 
 /* TOPO */
 .top-bar {
-    background-color: #a8d8ea;
+    background: linear-gradient(90deg, #c084fc, #f472b6);
     padding: 15px;
     text-align: center;
     position: sticky;
     top: 0;
+    color: white;
 }
+
 
 .top-bar h1 {
     margin: 0;
