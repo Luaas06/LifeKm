@@ -10,6 +10,7 @@
 
 <h1>LifeKm</h1>
 
+<!-- ================= Nascimento ================= -->
 <div class="section">
     <h2>👶 Seu Nascimento</h2>
     <p id="birthText"></p>
@@ -21,32 +22,58 @@
 
 <hr>
 
+<!-- ================= Status ================= -->
 <div class="section">
+
     <p>Idade: <span id="age">0</span></p>
 
     <p>Felicidade: <span id="happiness">100</span></p>
-    <div class="bar"><div id="happinessBar" class="fill"></div></div>
+    <div class="bar">
+        <div id="happinessBar" class="fill"></div>
+    </div>
 
     <p>Saúde: <span id="health">100</span></p>
-    <div class="bar"><div id="healthBar" class="fill"></div></div>
+    <div class="bar">
+        <div id="healthBar" class="fill"></div>
+    </div>
 
     <button onclick="ageUp()">Envelhecer</button>
     <button onclick="toggleFamily()">Relacionamentos</button>
-</div>
-<div id="lifeLog" style="max-height:200px; overflow-y:auto; background:white; margin:10px; padding:10px; border-radius:10px;"></div>
 
-<div id="familyPanel">
+</div>
+
+<!-- ================= LOG DA VIDA ================= -->
+<div class="section">
+    <h3>📜 Sua Vida</h3>
+    <div id="lifeLog"
+         style="max-height:200px;
+                overflow-y:auto;
+                background:white;
+                padding:10px;
+                border-radius:10px;">
+    </div>
+</div>
+
+<!-- ================= Família ================= -->
+<div id="familyPanel" style="display: none;" class="section">
     <h3>👨‍👩‍👧 Família</h3>
 
     <p>👩 Mãe: <span id="motherRelationText"></span></p>
-    <div class="bar"><div id="motherBar" class="fill"></div></div>
+    <div class="bar">
+        <div id="motherBar" class="fill"></div>
+    </div>
 
     <p>👨 Pai: <span id="fatherRelationText"></span></p>
-    <div class="bar"><div id="fatherBar" class="fill"></div></div>
+    <div class="bar">
+        <div id="fatherBar" class="fill"></div>
+    </div>
 
     <button onclick="toggleFamily()">Fechar</button>
 </div>
 
 <script src="script.js"></script>
+
 </body>
 </html>
+
+
