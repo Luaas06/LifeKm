@@ -10,32 +10,38 @@
 
 <h1>LifeKm</h1>
 
-<!-- ================= Nascimento ================= -->
 <div class="game-container">
 
+    <!-- ESQUERDA -->
     <div class="left-panel">
         <h2>👶 Nascimento</h2>
         <p>Nome: <span id="playerName"></span></p>
         <p>Idade: <span id="age">0</span></p>
         <p>Mãe: <span id="motherName"></span></p>
         <p>Pai: <span id="fatherName"></span></p>
+
+        <h3>👧 Irmãos</h3>
+        <div id="siblingsContainer"></div>
     </div>
 
+    <!-- CENTRO -->
     <div class="center-panel">
         <button onclick="ageUp()">Avançar 1 ano</button>
-        <button onclick="openRelationships()">Relacionamentos</button>
+        <button onclick="toggleFamily()">Relacionamentos</button>
     </div>
 
+    <!-- DIREITA -->
     <div class="right-panel">
         <h2>📜 Sua Vida</h2>
-        <div id="lifeEvents"></div>
+        <div id="lifeLog"></div>
     </div>
 
 </div>
 
 
-<!-- ================= Família ================= -->
+<!-- PAINEL FAMÍLIA -->
 <div id="familyPanel" style="display: none;" class="section">
+
     <h3>👨‍👩‍👧 Família</h3>
 
     <p>👩 Mãe: <span id="motherRelationText"></span></p>
@@ -49,11 +55,10 @@
     </div>
 
     <button onclick="toggleFamily()">Fechar</button>
+
 </div>
 
 <script src="script.js"></script>
 
 </body>
 </html>
-
-
