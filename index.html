@@ -8,36 +8,35 @@
 
 <body>
 
-<h1>LifeKm</h1>
+<header>
+    LifeKm
+</header>
 
-<div class="game-container">
+<div class="container">
 
-    <div class="left-panel">
+    <!-- ESQUERDA -->
+    <div class="left-panel card">
 
-    <h2>👶 Nascimento</h2>
+        <h2>👶 Nascimento</h2>
 
-    <p id="birthText"></p>
+        <p id="birthText"></p>
 
-    <p><strong>Nome:</strong> <span id="playerName">Você</span></p>
+        <p><strong>Nome:</strong> <span id="playerName">Você</span></p>
+        <p><strong>Idade:</strong> <span id="age">0</span></p>
+        <p><strong>Tipo de nascimento:</strong> <span id="birthType"></span></p>
+        <p><strong>Signo:</strong> <span id="zodiac"></span></p>
 
-    <p><strong>Idade:</strong> <span id="age">0</span></p>
+        <hr>
 
-    <p><strong>Tipo de nascimento:</strong> <span id="birthType"></span></p>
+        <p><strong>👩 Mãe:</strong> <span id="motherName"></span></p>
+        <p><strong>👨 Pai:</strong> <span id="fatherName"></span></p>
 
-    <p><strong>Signo:</strong> <span id="zodiac"></span></p>
+        <hr>
 
-    <hr>
+        <h3>👧 Irmãos</h3>
+        <div id="siblingsContainer"></div>
 
-    <p><strong>👩 Mãe:</strong> <span id="motherName"></span></p>
-    <p><strong>👨 Pai:</strong> <span id="fatherName"></span></p>
-
-    <hr>
-
-    <h3>👧 Irmãos</h3>
-    <div id="siblingsContainer"></div>
-
-</div>
-
+    </div>
 
     <!-- CENTRO -->
     <div class="center-panel">
@@ -46,16 +45,15 @@
     </div>
 
     <!-- DIREITA -->
-    <div class="right-panel">
+    <div class="right-panel card">
         <h2>📜 Sua Vida</h2>
         <div id="lifeLog"></div>
     </div>
 
 </div>
 
-
 <!-- PAINEL FAMÍLIA -->
-<div id="familyPanel" style="display: none;" class="section">
+<div id="familyPanel" class="card" style="display: none; max-width: 500px; margin: 20px auto;">
 
     <h3>👨‍👩‍👧 Família</h3>
 
@@ -77,3 +75,4 @@
 
 </body>
 </html>
+
