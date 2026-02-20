@@ -92,11 +92,14 @@ function generateBirth() {
         "duas_maes",
         "dois_pais",
         "mae_solteira",
-        "pai_solteiro"
+        "pai_solteiro",
+        "Mae_adolescente",
+        "Pai_adolescente",
+        "Pais_adolescentes"
     ];
 
-    const maleNames = ["Carlos","João","Pedro","Lucas","Rafael","Miguel"];
-    const femaleNames = ["Ana","Maria","Julia","Fernanda","Beatriz","Helena"];
+    const maleNames = ["Carlos","João","Pedro","Lucas","Rafael","Miguel","Caetano","Antonio","Arlindo","Bruno"];
+    const femaleNames = ["Ana","Maria","Julia","Fernanda","Beatriz","Helena","Alice","Luna","Kaylane","Ruby"];
 
     const randomDay = Math.floor(Math.random()*28)+1;
     const randomMonth = Math.floor(Math.random()*12)+1;
@@ -164,6 +167,15 @@ function renderBirthInfo() {
         case "pai_solteiro":
             familyText = `👨 Pai solteiro: ${parent2.name}`;
             break;
+        case "Mãe adolescente":
+            familyText = `👩 Mãe adolescente: ${parent1.name}`;
+            break;
+        case "Pai adolescente":
+            familyText = `👨 Pai adolescente: ${parent2.name}`;
+            break;
+        case "Pais adolescente":
+            familyText = `👨‍👩‍👧 Pais adolescente: ${parent1.name}`; e ${parent2.name}`;
+            break;
     }
 
     container.innerHTML = `
@@ -181,8 +193,8 @@ function renderBirthInfo() {
 
 function generateFamilyTree(){
 
-    const male = ["Miguel","Arthur","Theo","Enzo","Rafael"];
-    const female = ["Laura","Helena","Sofia","Marina","Beatriz"];
+    const male = ["Miguel","Arthur","Theo","Enzo","Rafael","Antonio","Arlo","Liam","Benjamim","Leon","Gael","Heitor"];
+    const female = ["Laura","Helena","Sofia","Marina","Beatriz","Catarina","Bianca","Kally","Julia","Aylla","Zoe","Maria Clara"];
 
     maternalGrandparents = [
         {name: female[Math.floor(Math.random()*female.length)], age: parent1.age + 25},
