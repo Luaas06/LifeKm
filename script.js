@@ -18,11 +18,27 @@ let siblings = [];
 let cousins = [];
 let schoolStage = "Nenhuma"; 
 
+
 // ===============================
 // INICIAR JOGO
 // ===============================
 
-startGame();
+document.addEventListener("DOMContentLoaded", function(){
+
+    startGame();
+
+    // Conectar botões
+    const ageBtn = document.getElementById("ageButton");
+    if(ageBtn){
+        ageBtn.addEventListener("click", ageUp);
+    }
+
+    const familyBtn = document.getElementById("familyButton");
+    if(familyBtn){
+        familyBtn.addEventListener("click", toggleFamily);
+    }
+
+});
 
 function startGame() {
     generateBirth();
@@ -126,21 +142,11 @@ function renderBirthInfo() {
             break;
     }
 
-    let teenText = "";
-    if(parent1.age < 20 && parent2.age < 20){
-        teenText = "👶 Ambos eram adolescentes.";
-    } else if(parent1.age < 20){
-        teenText = "👩 Um dos pais era adolescente.";
-    } else if(parent2.age < 20){
-        teenText = "👨 Um dos pais era adolescente.";
-    }
-
     container.innerHTML = `
         📅 ${birthData.day}/${birthData.month}/${birthData.year}<br>
         ♈ ${birthData.zodiac}<br>
         👶 ${birthData.birthType}<br>
-        ${familyText}<br>
-        ${teenText}
+        ${familyText}
     `;
 }
 
@@ -154,7 +160,6 @@ function generateFamilyTree(){
     const male = ["Miguel","Arthur","Theo","Enzo","Rafael"];
     const female = ["Laura","Helena","Sofia","Marina","Beatriz"];
 
-    // Avós
     maternalGrandparents = [
         {name: female[Math.floor(Math.random()*female.length)], age: parent1.age + 25},
         {name: male[Math.floor(Math.random()*male.length)], age: parent1.age + 28}
@@ -191,8 +196,12 @@ function generateRelatives(max, femaleNames, maleNames, maxAge){
     return arr;
 }
 
+
+// ===============================
+// ESCOLA
+// ===============================
+
 function updateSchool(){
-//function updateSchool(){
 
     let previousStage = schoolStage;
 
@@ -209,14 +218,16 @@ function updateSchool(){
         schoolStage = "Nenhuma";
     }
 
-    // Só registra evento se mudou de fase
     if(previousStage !== schoolStage && schoolStage !== "Nenhuma"){
         addLifeEvent("🎒 Você começou a " + schoolStage + ".");
     }
-} 
-===============================
+}
+
+
+// ===============================
 // ENVELHECER
 // ===============================
+
 function ageUp(){
 
     age++;
@@ -233,10 +244,12 @@ function ageUp(){
 
     updateSchool();
 
-    // Evento padrão se nada importante acontecer
     addLifeEvent("Nada de especial aconteceu este ano.");
 
-    document.getElementById("ageDisplay").innerText = age + " anos";
+    const ageDisplay = document.getElementById("ageDisplay");
+    if(ageDisplay){
+        ageDisplay.innerText = age + " anos";
+    }
 
     updateUI();
 }
@@ -278,9 +291,15 @@ function updateUI(){
 function toggleFamily(){
     const panel = document.getElementById("familyPanel");
     if(!panel) return;
+
     panel.style.display =
         panel.style.display === "none" ? "block" : "none";
 }
+
+
+// ===============================
+// EVENTOS
+// ===============================
 
 function addLifeEvent(text){
 
