@@ -28,7 +28,7 @@
 
     <!-- 🔹 Botão envelhecer -->
     <div class="age-button-container">
-        <button class="age-circle" onclick="ageUp()">+</button>
+        <button id="ageButton" class="age-circle">+</button>
         <p>Avançar idade</p>
     </div>
 
@@ -36,31 +36,36 @@
     <div class="status-card">
         <div class="status">
             <label>😊 Felicidade</label>
-            <div class="bar"><div id="happinessBar" class="fill" style="width: 60%"></div></div>
+            <div class="bar">
+                <div id="happinessBar" class="fill" style="width: 60%"></div>
+            </div>
         </div>
 
         <div class="status">
             <label>💪 Saúde</label>
-            <div class="bar"><div id="healthBar" class="fill" style="width: 70%"></div></div>
+            <div class="bar">
+                <div id="healthBar" class="fill" style="width: 70%"></div>
+            </div>
         </div>
 
         <div class="status">
             <label>🧠 Inteligência</label>
-            <div class="bar"><div id="smartsBar" class="fill" style="width: 80%"></div></div>
+            <div class="bar">
+                <div id="smartsBar" class="fill" style="width: 80%"></div>
+            </div>
         </div>
     </div>
 
 </div>
 
-<!-- 🔹 PAINEL DA FAMÍLIA (Árvore Genealógica) -->
+<!-- 🔹 PAINEL DA FAMÍLIA -->
 <div id="familyPanel" class="family-panel" style="display:none;">
     <h2>🌳 Árvore Genealógica</h2>
-    <!-- Conteúdo será preenchido via JS -->
 </div>
 
 <!-- 🔹 Menu inferior -->
 <nav class="bottom-nav">
-    <button onclick="toggleFamily()">👨‍👩‍👧 Família</button>
+    <button id="familyButton">👨‍👩‍👧 Família</button>
     <button>❤️ Relacionamentos</button>
     <button>💼 Carreira</button>
 </nav>
