@@ -27,19 +27,43 @@ document.addEventListener("DOMContentLoaded", function(){
 
     startGame();
 
-    // Conectar botões
+    // Botão Envelhecer
     const ageBtn = document.getElementById("ageButton");
     if(ageBtn){
         ageBtn.addEventListener("click", ageUp);
     }
 
+    // Botão Família
     const familyBtn = document.getElementById("familyButton");
     if(familyBtn){
         familyBtn.addEventListener("click", toggleFamily);
     }
 
-});
+    // Botão Escola
+    const schoolBtn = document.getElementById("schoolButton");
+    if(schoolBtn){
+        schoolBtn.addEventListener("click", function(){
+            alert("Abrir sistema escolar");
+        });
+    }
 
+    // Botão Finanças
+    const financeBtn = document.getElementById("financeButton");
+    if(financeBtn){
+        financeBtn.addEventListener("click", function(){
+            alert("Abrir finanças");
+        });
+    }
+
+    // Botão Atividades
+    const activitiesBtn = document.getElementById("activitiesButton");
+    if(activitiesBtn){
+        activitiesBtn.addEventListener("click", function(){
+            alert("Abrir atividades");
+        });
+    }
+
+});
 function startGame() {
     generateBirth();
     generateFamilyTree();
