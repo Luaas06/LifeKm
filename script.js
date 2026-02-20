@@ -373,46 +373,46 @@ function toggleFamily(){
     panel.style.display =
         panel.style.display === "none" ? "block" : "none";
 }
+let selectedSiblingIndex = null;
 
 function interactSibling(index){
+    selectedSiblingIndex = index;
+    document.getElementById("modalTitle").innerText =
+        "Interagir com " + siblings[index].name;
+    document.getElementById("familyModal").style.display = "flex";
+}
 
-    const sibling = siblings[index];
+function chooseSiblingAction(action){
 
-    const action = prompt(
-        "Escolha uma ação:\n" +
-        "1 - Passar tempo\n" +
-        "2 - Elogiar\n" +
-        "3 - Discutir"
-    );
-
-    if(!action) return;
+    const sibling = siblings[selectedSiblingIndex];
 
     switch(action){
-
-        case "1":
+        case 1:
             sibling.relationship += 10;
             addLifeEvent("❤️ Você passou tempo com " + sibling.name + ".");
             break;
-
-        case "2":
+        case 2:
             sibling.relationship += 5;
             addLifeEvent("😊 Você elogiou " + sibling.name + ".");
             break;
-
-        case "3":
+        case 3:
             sibling.relationship -= 15;
             addLifeEvent("😡 Você discutiu com " + sibling.name + ".");
             break;
-
-        default:
-            return;
     }
 
     if(sibling.relationship > 100) sibling.relationship = 100;
     if(sibling.relationship < 0) sibling.relationship = 0;
 
+    closeFamilyModal();
     updateUI();
 }
+
+function closeFamilyModal(){
+    document.getElementById("familyModal").style.display = "none";
+}
+
+
 function maybeHaveSibling(){
 
     // 25% de chance por ano
