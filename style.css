@@ -408,22 +408,24 @@ body {
     animation: popIn 0.3s ease;
 }
 
-/* Botões */
 .modal-content button{
     display:block;
     width:100%;
-    margin:8px 0;
-    padding:10px;
+    margin:10px 0;
+    padding:12px;
     border:none;
-    border-radius:15px;
-    font-size:14px;
+    border-radius:20px;
+    font-size:16px;
+    font-weight:600;
     cursor:pointer;
-    background:white;
+    background:#ffffff;
+    color:#333; /* 👈 AQUI ESTÁ A COR DO TEXTO */
     transition:0.2s;
 }
 
 .modal-content button:hover{
     transform:scale(1.05);
+    background:#f3f3f3;
 }
 
 /* Botão fechar */
