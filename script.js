@@ -110,8 +110,8 @@ function generateBirth() {
     let p1Age = Math.floor(Math.random()*20)+18;
     let p2Age = Math.floor(Math.random()*20)+18;
 
-    parent1 = { name: p1Name, age: p1Age };
-    parent2 = { name: p2Name, age: p2Age };
+    parent1 = { name: p1Name, age: p1Age, relationship: 80 };
+    parent2 = { name: p2Name, age: p2Age, relationship: 80 };;
 
     birthData = {
         day: randomDay,
@@ -205,7 +205,6 @@ function generateFamilyTree(){
 // ===============================
 // GERAR PARENTES
 // ===============================
-
 function generateRelatives(max, femaleNames, maleNames, maxAge){
     let arr = [];
     for(let i=0;i<max;i++){
@@ -214,11 +213,13 @@ function generateRelatives(max, femaleNames, maleNames, maxAge){
             name: isFemale ?
                 femaleNames[Math.floor(Math.random()*femaleNames.length)] :
                 maleNames[Math.floor(Math.random()*maleNames.length)],
-            age: Math.floor(Math.random()*maxAge)+1
+            age: Math.floor(Math.random()*maxAge)+1,
+            relationship: Math.floor(Math.random()*51)+50 // 50 a 100
         });
     }
     return arr;
 }
+
 
 
 // ===============================
@@ -267,7 +268,7 @@ function ageUp(){
     cousins.forEach(c=>c.age++);
 
     updateSchool();
-
+    maybeHaveSibling();
     addLifeEvent("Nada de especial aconteceu este ano.");
 
     const ageDisplay = document.getElementById("ageDisplay");
@@ -277,12 +278,26 @@ function ageUp(){
 
     updateUI();
 }
+// ===============================
+// FUNÇÃO BARRA DE RELACIONAMENTO
+// ===============================
 
+function createRelationshipBar(value){
+    return `
+        <div style="background:#ddd;border-radius:10px;width:100%;height:8px;margin:3px 0;">
+            <div style="
+                width:${value}%;
+                height:100%;
+                background:${value>70 ? '#4CAF50' : value>40 ? '#FFC107' : '#F44336'};
+                border-radius:10px;">
+            </div>
+        </div>
+    `;
+}
 
 // ===============================
 // ATUALIZAR FAMÍLIA
 // ===============================
-
 function updateUI(){
 
     const panel = document.getElementById("familyPanel");
@@ -290,23 +305,40 @@ function updateUI(){
 
     panel.innerHTML = `
         <h3>👨 Pais</h3>
-        ${parent1.name} (${parent1.age})<br>
+        ${parent1.name} (${parent1.age})
+        ${createRelationshipBar(parent1.relationship)}
         ${parent2.name} (${parent2.age})
+        ${createRelationshipBar(parent2.relationship)}
 
         <h3>👵 Avós Maternos</h3>
-        ${maternalGrandparents.map(g=>g.name+" ("+g.age+")").join("<br>")}
+        ${maternalGrandparents.map(g=>`
+            ${g.name} (${g.age})
+            ${createRelationshipBar(g.relationship)}
+        `).join("")}
 
         <h3>👴 Avós Paternos</h3>
-        ${paternalGrandparents.map(g=>g.name+" ("+g.age+")").join("<br>")}
+        ${paternalGrandparents.map(g=>`
+            ${g.name} (${g.age})
+            ${createRelationshipBar(g.relationship)}
+        `).join("")}
 
         <h3>👧 Irmãos</h3>
-        ${siblings.length ? siblings.map(s=>s.name+" ("+s.age+")").join("<br>") : "Nenhum"}
+        ${siblings.length ?
+            siblings.map(s=>`
+                ${s.name} (${s.age})
+                ${createRelationshipBar(s.relationship)}
+            `).join("")
+            : "Nenhum"}
 
         <h3>👦 Primos</h3>
-        ${cousins.length ? cousins.map(c=>c.name+" ("+c.age+")").join("<br>") : "Nenhum"}
+        ${cousins.length ?
+            cousins.map(c=>`
+                ${c.name} (${c.age})
+                ${createRelationshipBar(c.relationship)}
+            `).join("")
+            : "Nenhum"}
     `;
 }
-
 
 // ===============================
 // MOSTRAR/OCULTAR FAMÍLIA
@@ -320,6 +352,29 @@ function toggleFamily(){
         panel.style.display === "none" ? "block" : "none";
 }
 
+function maybeHaveSibling(){
+
+    // 25% de chance por ano
+    if(Math.random() < 0.25 && age < 18){
+
+        const male = ["Miguel","Arthur","Theo","Enzo","Rafael"];
+        const female = ["Laura","Helena","Sofia","Marina","Beatriz"];
+
+        const isFemale = Math.random() < 0.5;
+
+        const newSibling = {
+            name: isFemale ?
+                female[Math.floor(Math.random()*female.length)] :
+                male[Math.floor(Math.random()*male.length)],
+            age: 0,
+            relationship: 70
+        };
+
+        siblings.push(newSibling);
+
+        addLifeEvent("👶 Você ganhou um novo irmão(a): " + newSibling.name + "!");
+    }
+}
 
 // ===============================
 // EVENTOS
