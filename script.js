@@ -150,33 +150,41 @@ function renderBirthInfo() {
     if (!container) return;
 
     let familyText = "";
+switch(birthData.familyType){
+    case "mae_pai":
+        familyText = `👨‍👩‍👧 Pais: ${parent1.name} e ${parent2.name}`;
+        break;
 
-    switch(birthData.familyType){
-        case "mae_pai":
-            familyText = `👨‍👩‍👧 Pais: ${parent1.name} e ${parent2.name}`;
-            break;
-        case "duas_maes":
-            familyText = `👩‍👩‍👦 Duas mães: ${parent1.name} e ${parent2.name}`;
-            break;
-        case "dois_pais":
-            familyText = `👨‍👨‍👦 Dois pais: ${parent1.name} e ${parent2.name}`;
-            break;
-        case "mae_solteira":
-            familyText = `👩 Mãe solteira: ${parent1.name}`;
-            break;
-        case "pai_solteiro":
-            familyText = `👨 Pai solteiro: ${parent2.name}`;
-            break;
-        case "Mãe adolescente":
-            familyText = `👩 Mãe adolescente: ${parent1.name}`;
-            break;
-        case "Pai adolescente":
-            familyText = `👨 Pai adolescente: ${parent2.name}`;
-            break;
-        case "Pais adolescente":
-            familyText = `👨‍👩‍👧 Pais adolescente: ${parent1.name}`; e ${parent2.name}`;
-            break;
-    }
+    case "duas_maes":
+        familyText = `👩‍👩‍👦 Duas mães: ${parent1.name} e ${parent2.name}`;
+        break;
+
+    case "dois_pais":
+        familyText = `👨‍👨‍👦 Dois pais: ${parent1.name} e ${parent2.name}`;
+        break;
+
+    case "mae_solteira":
+        familyText = `👩 Mãe solteira: ${parent1.name}`;
+        break;
+
+    case "pai_solteiro":
+        familyText = `👨 Pai solteiro: ${parent2.name}`;
+        break;
+
+    case "Mae_adolescente":
+        familyText = `👩 Mãe adolescente: ${parent1.name}`;
+        break;
+
+    case "Pai_adolescente":
+        familyText = `👨 Pai adolescente: ${parent2.name}`;
+        break;
+
+    case "Pais_adolescentes":
+        familyText = `👨‍👩‍👧 Pais adolescentes: ${parent1.name} e ${parent2.name}`;
+        break;
+}
+   
+        
 
     container.innerHTML = `
         📅 ${birthData.day}/${birthData.month}/${birthData.year}<br>
@@ -195,17 +203,16 @@ function generateFamilyTree(){
 
     const male = ["Miguel","Arthur","Theo","Enzo","Rafael","Antonio","Arlo","Liam","Benjamim","Leon","Gael","Heitor"];
     const female = ["Laura","Helena","Sofia","Marina","Beatriz","Catarina","Bianca","Kally","Julia","Aylla","Zoe","Maria Clara"];
-
+    
     maternalGrandparents = [
-        {name: female[Math.floor(Math.random()*female.length)], age: parent1.age + 25},
-        {name: male[Math.floor(Math.random()*male.length)], age: parent1.age + 28}
-    ];
-
-    paternalGrandparents = [
-        {name: female[Math.floor(Math.random()*female.length)], age: parent2.age + 24},
-        {name: male[Math.floor(Math.random()*male.length)], age: parent2.age + 27}
-    ];
-
+    {name: female[Math.floor(Math.random()*female.length)], age: parent1.age + 25, relationship: 70},
+    {name: male[Math.floor(Math.random()*male.length)], age: parent1.age + 28, relationship: 70}
+];
+  
+   paternalGrandparents = [
+    {name: female[Math.floor(Math.random()*female.length)], age: parent2.age + 24, relationship: 70},
+    {name: male[Math.floor(Math.random()*male.length)], age: parent2.age + 27, relationship: 70}
+];
     maternalUncles = generateRelatives(2, female, male, parent1.age - 5);
     paternalUncles = generateRelatives(2, female, male, parent2.age - 5);
 
@@ -336,11 +343,14 @@ function updateUI(){
 
         <h3>👧 Irmãos</h3>
         ${siblings.length ?
-            siblings.map(s=>`
-                ${s.name} (${s.age})
-                ${createRelationshipBar(s.relationship)}
-            `).join("")
-            : "Nenhum"}
+    siblings.map((s,index)=>`
+        <div style="margin-bottom:8px;cursor:pointer;"
+             onclick="interactSibling(${index})">
+            ${s.name} (${s.age})
+            ${createRelationshipBar(s.relationship)}
+        </div>
+    `).join("")
+    : "Nenhum"}
 
         <h3>👦 Primos</h3>
         ${cousins.length ?
@@ -364,6 +374,45 @@ function toggleFamily(){
         panel.style.display === "none" ? "block" : "none";
 }
 
+function interactSibling(index){
+
+    const sibling = siblings[index];
+
+    const action = prompt(
+        "Escolha uma ação:\n" +
+        "1 - Passar tempo\n" +
+        "2 - Elogiar\n" +
+        "3 - Discutir"
+    );
+
+    if(!action) return;
+
+    switch(action){
+
+        case "1":
+            sibling.relationship += 10;
+            addLifeEvent("❤️ Você passou tempo com " + sibling.name + ".");
+            break;
+
+        case "2":
+            sibling.relationship += 5;
+            addLifeEvent("😊 Você elogiou " + sibling.name + ".");
+            break;
+
+        case "3":
+            sibling.relationship -= 15;
+            addLifeEvent("😡 Você discutiu com " + sibling.name + ".");
+            break;
+
+        default:
+            return;
+    }
+
+    if(sibling.relationship > 100) sibling.relationship = 100;
+    if(sibling.relationship < 0) sibling.relationship = 0;
+
+    updateUI();
+}
 function maybeHaveSibling(){
 
     // 25% de chance por ano
