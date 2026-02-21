@@ -111,11 +111,72 @@ function generateBirth() {
     let p1Name = femaleNames[Math.floor(Math.random()*femaleNames.length)];
     let p2Name = maleNames[Math.floor(Math.random()*maleNames.length)];
 
-    let p1Age = Math.floor(Math.random()*20)+18;
-    let p2Age = Math.floor(Math.random()*20)+18;
+    let p1Age;
+    let p2Age;
 
-    parent1 = { name: p1Name, age: p1Age, relationship: 80 };
-    parent2 = { name: p2Name, age: p2Age, relationship: 80 };;
+    // Idades corretas
+    function adultAge() {
+        return Math.floor(Math.random()*15) + 20; // 20–34
+    }
+
+    function teenAge() {
+        return Math.floor(Math.random()*6) + 14; // 14–19
+    }
+
+    // Resetar pais
+    parent1 = null;
+    parent2 = null;
+
+    switch(familyType){
+
+        case "mae_pai":
+            p1Age = adultAge();
+            p2Age = adultAge();
+            parent1 = { name: p1Name, age: p1Age, relationship: 80 };
+            parent2 = { name: p2Name, age: p2Age, relationship: 80 };
+            break;
+
+        case "duas_maes":
+            p1Age = adultAge();
+            p2Age = adultAge();
+            parent1 = { name: p1Name, age: p1Age, relationship: 80 };
+            parent2 = { name: femaleNames[Math.floor(Math.random()*femaleNames.length)], age: p2Age, relationship: 80 };
+            break;
+
+        case "dois_pais":
+            p1Age = adultAge();
+            p2Age = adultAge();
+            parent1 = { name: maleNames[Math.floor(Math.random()*maleNames.length)], age: p1Age, relationship: 80 };
+            parent2 = { name: p2Name, age: p2Age, relationship: 80 };
+            break;
+
+        case "mae_solteira":
+            p1Age = adultAge();
+            parent1 = { name: p1Name, age: p1Age, relationship: 80 };
+            break;
+
+        case "pai_solteiro":
+            p2Age = adultAge();
+            parent2 = { name: p2Name, age: p2Age, relationship: 80 };
+            break;
+
+        case "Mae_adolescente":
+            p1Age = teenAge();
+            parent1 = { name: p1Name, age: p1Age, relationship: 80 };
+            break;
+
+        case "Pai_adolescente":
+            p2Age = teenAge();
+            parent2 = { name: p2Name, age: p2Age, relationship: 80 };
+            break;
+
+        case "Pais_adolescentes":
+            p1Age = teenAge();
+            p2Age = teenAge();
+            parent1 = { name: p1Name, age: p1Age, relationship: 80 };
+            parent2 = { name: p2Name, age: p2Age, relationship: 80 };
+            break;
+    }
 
     birthData = {
         day: randomDay,
@@ -126,7 +187,6 @@ function generateBirth() {
         familyType
     };
 }
-
 
 // ===============================
 // SIGNO
@@ -204,23 +264,29 @@ function generateFamilyTree(){
 
     const male = ["Miguel","Arthur","Theo","Enzo","Rafael","Antonio","Arlo","Liam","Benjamim","Leon","Gael","Heitor"];
     const female = ["Laura","Helena","Sofia","Marina","Beatriz","Catarina","Bianca","Kally","Julia","Aylla","Zoe","Maria Clara"];
-    
-    maternalGrandparents = [
-    {name: female[Math.floor(Math.random()*female.length)], age: parent1.age + 25, relationship: 70},
-    {name: male[Math.floor(Math.random()*male.length)], age: parent1.age + 28, relationship: 70}
-];
-  
-   paternalGrandparents = [
-    {name: female[Math.floor(Math.random()*female.length)], age: parent2.age + 24, relationship: 70},
-    {name: male[Math.floor(Math.random()*male.length)], age: parent2.age + 27, relationship: 70}
-];
-    maternalUncles = generateRelatives(2, female, male, parent1.age - 5);
-    paternalUncles = generateRelatives(2, female, male, parent2.age - 5);
+
+    maternalGrandparents = [];
+    paternalGrandparents = [];
+
+    if(parent1){
+        maternalGrandparents = [
+            {name: female[Math.floor(Math.random()*female.length)], age: parent1.age + 25, relationship: 70},
+            {name: male[Math.floor(Math.random()*male.length)], age: parent1.age + 28, relationship: 70}
+        ];
+        maternalUncles = generateRelatives(2, female, male, parent1.age - 5);
+    }
+
+    if(parent2){
+        paternalGrandparents = [
+            {name: female[Math.floor(Math.random()*female.length)], age: parent2.age + 24, relationship: 70},
+            {name: male[Math.floor(Math.random()*male.length)], age: parent2.age + 27, relationship: 70}
+        ];
+        paternalUncles = generateRelatives(2, female, male, parent2.age - 5);
+    }
 
     siblings = generateRelatives(Math.floor(Math.random()*3), female, male, 15);
     cousins = generateRelatives(Math.floor(Math.random()*4), female, male, 18);
 }
-
 
 // ===============================
 // GERAR PARENTES
@@ -277,8 +343,8 @@ function ageUp(){
 
     age++;
 
-    parent1.age++;
-    parent2.age++;
+    if(parent1) parent1.age++;
+    if(parent2) parent2.age++;
 
     maternalGrandparents.forEach(g=>g.age++);
     paternalGrandparents.forEach(g=>g.age++);
@@ -324,12 +390,16 @@ function updateUI(){
     if(!panel) return;
 
     panel.innerHTML = `
-        <h3>👨 Pais</h3>
-        ${parent1.name} (${parent1.age})
-        ${createRelationshipBar(parent1.relationship)}
-        ${parent2.name} (${parent2.age})
-        ${createRelationshipBar(parent2.relationship)}
+       <h3>👨 Pais</h3>
+${parent1 ? `
+    ${parent1.name} (${parent1.age})
+    ${createRelationshipBar(parent1.relationship)}
+` : ""}
 
+${parent2 ? `
+    ${parent2.name} (${parent2.age})
+    ${createRelationshipBar(parent2.relationship)}
+` : ""}
         <h3>👵 Avós Maternos</h3>
         ${maternalGrandparents.map(g=>`
             ${g.name} (${g.age})
