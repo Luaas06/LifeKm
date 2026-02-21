@@ -427,22 +427,22 @@ function updateUI(){
         </div>
         ` : ""}
 
-        ${siblings.length ? `
-<div class="family-section">
-    <div class="family-title">👧 Irmãos</div>
-    <div class="family-grid">
-        ${
-            siblings && siblings.length > 0
-            ? siblings.map((s,index)=>`
-                <div onclick="interactSibling(${index})">
-                    ${createCard(s)}
-                </div>
-            `).join("")
-            : `<div style="font-size:13px;color:#777;">Nenhum irmão ainda</div>`
-        }
-    </div>
-</div>
-      
+        <!-- IRMÃOS (sempre aparece a seção) -->
+        <div class="family-section">
+            <div class="family-title">👧 Irmãos</div>
+            <div class="family-grid">
+                ${
+                    siblings && siblings.length > 0
+                    ? siblings.map((s,index)=>`
+                        <div onclick="interactSibling(${index})">
+                            ${createCard(s)}
+                        </div>
+                    `).join("")
+                    : `<div style="font-size:13px;color:#777;">Nenhum irmão ainda</div>`
+                }
+            </div>
+        </div>
+
         ${cousins.length ? `
         <div class="family-section">
             <div class="family-title">👦 Primos</div>
