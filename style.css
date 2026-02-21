@@ -438,3 +438,42 @@ body {
     from{transform:scale(0.8); opacity:0;}
     to{transform:scale(1); opacity:1;}
 }
+.family-section {
+    margin-bottom: 20px;
+}
+
+.family-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #444;
+}
+
+.family-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.family-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 10px;
+    width: 150px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    font-size: 14px;
+    transition: transform 0.2s ease;
+}
+
+.family-card:hover {
+    transform: scale(1.03);
+}
+
+.family-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.family-age {
+    font-size: 12px;
+    color: #777;
+}
