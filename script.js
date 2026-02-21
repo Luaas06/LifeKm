@@ -389,50 +389,67 @@ function updateUI(){
     const panel = document.getElementById("familyPanel");
     if(!panel) return;
 
+    function createCard(person){
+        return `
+            <div class="family-card">
+                <div class="family-name">${person.name}</div>
+                <div class="family-age">${person.age} anos</div>
+                ${createRelationshipBar(person.relationship)}
+            </div>
+        `;
+    }
+
     panel.innerHTML = `
-       <h3>👨 Pais</h3>
-${parent1 ? `
-    ${parent1.name} (${parent1.age})
-    ${createRelationshipBar(parent1.relationship)}
-` : ""}
 
-${parent2 ? `
-    ${parent2.name} (${parent2.age})
-    ${createRelationshipBar(parent2.relationship)}
-` : ""}
-        <h3>👵 Avós Maternos</h3>
-        ${maternalGrandparents.map(g=>`
-            ${g.name} (${g.age})
-            ${createRelationshipBar(g.relationship)}
-        `).join("")}
-
-        <h3>👴 Avós Paternos</h3>
-        ${paternalGrandparents.map(g=>`
-            ${g.name} (${g.age})
-            ${createRelationshipBar(g.relationship)}
-        `).join("")}
-
-        <h3>👧 Irmãos</h3>
-        ${siblings.length ?
-    siblings.map((s,index)=>`
-        <div style="margin-bottom:8px;cursor:pointer;"
-             onclick="interactSibling(${index})">
-            ${s.name} (${s.age})
-            ${createRelationshipBar(s.relationship)}
+        <div class="family-section">
+            <div class="family-title">👨 Pais</div>
+            <div class="family-grid">
+                ${parent1 ? createCard(parent1) : ""}
+                ${parent2 ? createCard(parent2) : ""}
+            </div>
         </div>
-    `).join("")
-    : "Nenhum"}
 
-        <h3>👦 Primos</h3>
-        ${cousins.length ?
-            cousins.map(c=>`
-                ${c.name} (${c.age})
-                ${createRelationshipBar(c.relationship)}
-            `).join("")
-            : "Nenhum"}
+        ${maternalGrandparents.length ? `
+        <div class="family-section">
+            <div class="family-title">👵 Avós Maternos</div>
+            <div class="family-grid">
+                ${maternalGrandparents.map(g => createCard(g)).join("")}
+            </div>
+        </div>
+        ` : ""}
+
+        ${paternalGrandparents.length ? `
+        <div class="family-section">
+            <div class="family-title">👴 Avós Paternos</div>
+            <div class="family-grid">
+                ${paternalGrandparents.map(g => createCard(g)).join("")}
+            </div>
+        </div>
+        ` : ""}
+
+        ${siblings.length ? `
+        <div class="family-section">
+            <div class="family-title">👧 Irmãos</div>
+            <div class="family-grid">
+                ${siblings.map((s,index)=>`
+                    <div onclick="interactSibling(${index})">
+                        ${createCard(s)}
+                    </div>
+                `).join("")}
+            </div>
+        </div>
+        ` : ""}
+
+        ${cousins.length ? `
+        <div class="family-section">
+            <div class="family-title">👦 Primos</div>
+            <div class="family-grid">
+                ${cousins.map(c => createCard(c)).join("")}
+            </div>
+        </div>
+        ` : ""}
     `;
 }
-
 // ===============================
 // MOSTRAR/OCULTAR FAMÍLIA
 // ===============================
