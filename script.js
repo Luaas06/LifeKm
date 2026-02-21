@@ -82,6 +82,7 @@ function generateBirth() {
         "Parto normal",
         "Cesárea",
         "Prematuro",
+        "Barriga de aluguel",
         "Fertilização in vitro",
         "Barriga solidária",
         "Adoção"
